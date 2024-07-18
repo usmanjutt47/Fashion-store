@@ -17,7 +17,7 @@ const OnBoarding = () => {
         resizeMode="cover"
         style={styles.bgImage}
       />
-      <Animated.View entering={FadeInDown.duration(600)} style={{ flex: 1 }}>
+      <View entering={FadeInDown.duration(600)} style={{ flex: 1 }}>
         <LinearGradient
           colors={[
             "rgba(255,255,255,0)",
@@ -30,28 +30,22 @@ const OnBoarding = () => {
           end={{ x: 0.5, y: 0.8 }}
         />
         <View style={styles.contentContainer}>
-          <Animated.Text
-            style={styles.title}
-            entering={FadeInDown.delay(400).springify()}
-          >
-            Pixels
-          </Animated.Text>
-          <Animated.Text
-            entering={FadeInDown.delay(500).springify()}
-            style={styles.puchLine}
-          >
-            Every Pixels Tells a Story
-          </Animated.Text>
-          <Animated.View entering={FadeInDown.delay(600).springify()}>
+          <Text style={styles.title}>Find the Latest</Text>
+          <Text style={styles.title}>Collections</Text>
+          <Text style={styles.puchLine}>
+            Explore the latest fashion collections designed to
+          </Text>
+          <Text>reflect modern elegance and style.</Text>
+          <View>
             <Pressable
               style={styles.startButton}
               onPress={() => navigation.navigate("HomeScreen")}
             >
               <Text style={styles.startText}>Start Explore</Text>
             </Pressable>
-          </Animated.View>
+          </View>
         </View>
-      </Animated.View>
+      </View>
     </View>
   );
 };
@@ -63,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bgImage: {
-    height: "100%",
+    height: "70%",
     width: "100%",
     position: "absolute",
   },
@@ -77,31 +71,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
-    gap: 14,
   },
   title: {
-    fontSize: hp(14),
-    color: theme.colors.neutral(0.9),
-    fontWeight: theme.fontWeight.bold,
+    fontSize: 40,
+    color: "#000",
   },
   puchLine: {
-    fontSize: hp(4),
-    letterSpacing: 1,
-    marginBottom: 10,
+    fontSize: 14,
     fontWeight: theme.fontWeight.medium,
+    textAlign: "center",
   },
   startButton: {
-    marginBottom: 50,
     backgroundColor: theme.colors.neutral(0.9),
     padding: 15,
     paddingHorizontal: 90,
-    borderRadius: theme.radius.xl,
-    borderCurve: "continuous",
   },
   startText: {
     color: theme.colors.white,
-    fontSize: hp(6),
-    fontWeight: theme.fontWeight.medium,
-    letterSpacing: 1,
   },
 });
