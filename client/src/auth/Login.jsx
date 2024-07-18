@@ -7,7 +7,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -111,7 +111,7 @@ export default function Login() {
         </Pressable>
       </Animated.View>
       <Animated.View entering={FadeInDown.delay(600).springify()}>
-        <Pressable>
+        <Pressable onPress={() => navigation.navigate("SignUp")}>
           <Text style={{ color: "#000", marginTop: 5 }}>
             Don't have an account?{"  "}
             <Text style={{ color: "#000", fontWeight: "bold" }}>SignUp</Text>
