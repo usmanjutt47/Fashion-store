@@ -10,7 +10,9 @@ import { Entypo, FontAwesome } from "@expo/vector-icons";
 export default function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [buttonClicked, setButtonClicked] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -22,7 +24,9 @@ export default function SignUp() {
       setButtonClicked(true);
     } else {
       console.log("Username:", username);
+      console.log("Email:", email);
       console.log("Password:", password);
+      console.log("Confirm Password:", confirmPassword);
     }
   };
 
@@ -32,8 +36,10 @@ export default function SignUp() {
         entering={FadeInUp.delay(600).springify()}
         style={styles.headingContainer}
       >
-        <Text style={styles.heading}>Login</Text>
+        <Text style={styles.heading}>SignUp</Text>
       </Animated.View>
+
+      {/*name section starts below*/}
       <Animated.View
         entering={FadeInLeft.delay(100)}
         style={styles.animatedContainer}
@@ -41,12 +47,12 @@ export default function SignUp() {
         <View style={styles.inputContainer}>
           <FontAwesome
             name="user"
-            size={24}
+            size={20}
             color="black"
             style={styles.icon}
           />
           <TextInput
-            placeholder="username/email"
+            placeholder="Name"
             style={styles.input}
             value={username}
             onChangeText={setUsername}
@@ -54,9 +60,36 @@ export default function SignUp() {
           />
         </View>
         {buttonClicked && !username.trim() && (
-          <Text style={styles.errorMessage}>Please enter username/email</Text>
+          <Text style={styles.errorMessage}>Please enter your name</Text>
         )}
       </Animated.View>
+
+      {/* email section starts below */}
+      <Animated.View
+        entering={FadeInLeft.delay(100)}
+        style={styles.animatedContainer}
+      >
+        <View style={styles.inputContainer}>
+          <FontAwesome
+            name="envelope"
+            size={20}
+            color="black"
+            style={styles.icon}
+          />
+          <TextInput
+            placeholder="Email"
+            style={styles.input}
+            value={email}
+            onChangeText={setEmail}
+            cursorColor={"#000"}
+          />
+        </View>
+        {buttonClicked && !email.trim() && (
+          <Text style={styles.errorMessage}>Please enter your email</Text>
+        )}
+      </Animated.View>
+
+      {/* password section starts below */}
       <Animated.View
         entering={FadeInLeft.delay(100).springify()}
         style={styles.animatedContainer}
@@ -64,7 +97,7 @@ export default function SignUp() {
         <View style={styles.passwordContainer}>
           <Entypo name="lock" size={20} color="#000" style={styles.icon} />
           <TextInput
-            placeholder="password"
+            placeholder="Password"
             style={styles.input}
             value={password}
             onChangeText={setPassword}
@@ -86,13 +119,43 @@ export default function SignUp() {
           </Text>
         )}
       </Animated.View>
+      {/* confirmPassword section starts below */}
+      <Animated.View
+        entering={FadeInLeft.delay(100).springify()}
+        style={styles.animatedContainer}
+      >
+        <View style={styles.passwordContainer}>
+          <Entypo name="lock" size={20} color="#000" style={styles.icon} />
+          <TextInput
+            placeholder="Confirm Password"
+            style={styles.input}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={!passwordVisible}
+            cursorColor={"#000"}
+          />
+          <Pressable onPress={togglePasswordVisibility}>
+            <FontAwesome
+              name={passwordVisible ? "eye" : "eye-slash"}
+              size={20}
+              color="#000"
+              style={{ marginRight: 10 }}
+            />
+          </Pressable>
+        </View>
+        {buttonClicked && !confirmPassword.trim() && (
+          <Text style={[styles.errorMessage, { marginRight: "54%" }]}>
+            Please Confrim Password
+          </Text>
+        )}
+      </Animated.View>
       <Animated.View
         entering={FadeInDown.delay(600).springify()}
         style={{
           width: "80%",
           backgroundColor: "#000",
           height: 50,
-          borderRadius: 7,
+          borderRadius: 30,
           marginTop: 20,
           justifyContent: "center",
         }}
@@ -106,13 +169,13 @@ export default function SignUp() {
               fontWeight: "bold",
             }}
           >
-            Login
+            SignUp
           </Text>
         </Pressable>
       </Animated.View>
       <Animated.View entering={FadeInDown.delay(600).springify()}>
         <Pressable>
-          <Text style={{ color: "#000", marginTop: 5 }}>
+          <Text style={{ color: "#000", marginTop: "5%" }}>
             Don't have an account?{"  "}
             <Text style={{ color: "#000", fontWeight: "bold" }}>SignUp</Text>
           </Text>
@@ -129,9 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  headingContainer: {
-    marginBottom: 40,
-  },
+  headingContainer: {},
   heading: {
     fontSize: 35,
     fontWeight: "bold",
@@ -145,9 +206,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: "#000",
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 30,
     backgroundColor: "#fff",
-    marginTop: 10,
     paddingLeft: 10,
   },
   icon: {
@@ -170,7 +230,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: "#000",
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 30,
     backgroundColor: "#fff",
     paddingLeft: 10,
   },
