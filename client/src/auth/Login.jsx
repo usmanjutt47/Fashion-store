@@ -110,13 +110,13 @@ export default function Login() {
           </Text>
         </Pressable>
       </Animated.View>
-      <Animated.View>
-        <Text style={{ color: "#000", marginTop: 5 }}>
-          Don't have an account?
-          <Text style={{ color: "#000", fontWeight: "bold" }}>
-            SignUp here.
+      <Animated.View entering={FadeInDown.delay(600).springify()}>
+        <Pressable>
+          <Text style={{ color: "#000", marginTop: 5 }}>
+            Don't have an account?{"  "}
+            <Text style={{ color: "#000", fontWeight: "bold" }}>SignUp</Text>
           </Text>
-        </Text>
+        </Pressable>
       </Animated.View>
     </View>
   );
