@@ -1,14 +1,21 @@
+const { hashPassword } = require("../helpers/authHelper");
 const userModel = require("../models/userModel");
 
 const registerController = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, confirmPassword } = req.body;
 
-    // Validation error
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !confirmPassword) {
       return res.status(400).send({
         success: false,
         message: "Please provide all required fields",
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).send({
+        success: false,
+        message: "Passwords do not match",
       });
     }
 
@@ -20,11 +27,10 @@ const registerController = async (req, res) => {
       });
     }
 
-    // Create new user
     const newUser = new userModel({
       name,
       email,
-      password,  // Storing password as plain text (not recommended)
+      password,
     });
 
     await newUser.save();
@@ -43,4 +49,4 @@ const registerController = async (req, res) => {
   }
 };
 
-module.exports = registerController;
+module.exports = { registerController };

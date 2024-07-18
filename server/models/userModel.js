@@ -17,16 +17,22 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      match: [
-        /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-        "Please enter a valid email address ending with @gmail.com",
-      ],
     },
     password: {
       type: String,
       required: true,
       minlength: 6,
       maxlength: 64,
+    },
+    confirmPassword: {
+      type: String,
+      required: true,
+      validate: {
+        validator: function (value) {
+          return this.password === value;
+        },
+        message: "Passwords do not match",
+      },
     },
   },
   { timestamps: true }
