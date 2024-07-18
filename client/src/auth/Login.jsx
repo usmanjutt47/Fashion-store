@@ -48,8 +48,8 @@ export default function Login() {
           <TextInput
             placeholder="username/email"
             style={styles.input}
-            value={username} 
-            onChangeText={setUsername} 
+            value={username}
+            onChangeText={setUsername}
             cursorColor={"#000"}
           />
         </View>
@@ -66,8 +66,8 @@ export default function Login() {
           <TextInput
             placeholder="password"
             style={styles.input}
-            value={password} 
-            onChangeText={setPassword} 
+            value={password}
+            onChangeText={setPassword}
             secureTextEntry={!passwordVisible}
             cursorColor={"#000"}
           />
@@ -109,6 +109,14 @@ export default function Login() {
             Login
           </Text>
         </Pressable>
+      </Animated.View>
+      <Animated.View>
+        <Text style={{ color: "#000", marginTop: 5 }}>
+          Don't have an account?
+          <Text style={{ color: "#000", fontWeight: "bold" }}>
+            SignUp here.
+          </Text>
+        </Text>
       </Animated.View>
     </View>
   );
