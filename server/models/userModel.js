@@ -18,21 +18,16 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    phone: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
     password: {
       type: String,
       required: true,
       minlength: 6,
       maxlength: 64,
-    },
-    confirmPassword: {
-      type: String,
-      required: true,
-      validate: {
-        validator: function (value) {
-          return this.password === value;
-        },
-        message: "Passwords do not match",
-      },
     },
   },
   { timestamps: true }

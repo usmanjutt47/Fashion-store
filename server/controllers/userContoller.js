@@ -1,35 +1,36 @@
-const { hashPassword } = require("../helpers/authHelper");
 const userModel = require("../models/userModel");
 
 const registerController = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword } = req.body;
+    const { name, email, phone, password } = req.body;
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !phone) {
       return res.status(400).send({
         success: false,
         message: "Please provide all required fields",
       });
     }
 
-    if (password !== confirmPassword) {
+    const existingUserByEmail = await userModel.findOne({ email });
+    if (existingUserByEmail) {
       return res.status(400).send({
         success: false,
-        message: "Passwords do not match",
+        message: "Email already exists",
       });
     }
 
-    const existingUser = await userModel.findOne({ email });
-    if (existingUser) {
-      return res.status(500).send({
+    const existingUserByPhone = await userModel.findOne({ phone });
+    if (existingUserByPhone) {
+      return res.status(400).send({
         success: false,
-        message: "Email already exists",
+        message: "Phone number already registered",
       });
     }
 
     const newUser = new userModel({
       name,
       email,
+      phone,
       password,
     });
 
@@ -40,7 +41,7 @@ const registerController = async (req, res) => {
       message: "User registered successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error registering user:", error);
     return res.status(500).send({
       success: false,
       message: "An error occurred while registering user",
@@ -49,4 +50,4 @@ const registerController = async (req, res) => {
   }
 };
 
-module.exports = { registerController };
+module.exports = { registerController }
