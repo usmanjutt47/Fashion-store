@@ -27,6 +27,7 @@ export default function Login() {
               backgroundColor: "red",
               flexDirection: "row",
               alignItems: "center",
+              marginTop: 20,
             }}
           >
             <Pressable
@@ -35,6 +36,7 @@ export default function Login() {
                 height: 44,
                 backgroundColor: "#9CADBA",
                 borderRadius: 36,
+                zIndex: 99,
               }}
               onPress={() => navigation.goBack()}
             ></Pressable>
@@ -43,6 +45,8 @@ export default function Login() {
               style={{
                 flex: 1,
                 backgroundColor: "blue",
+                position: "absolute",
+                width: "100%",
               }}
             >
               <Text
