@@ -178,7 +178,7 @@ export default function Login() {
                     marginTop: "4%",
                   }}
                 >
-                  Forgot Password
+                  Forgot Password?
                 </Text>
               </Pressable>
             </View>
