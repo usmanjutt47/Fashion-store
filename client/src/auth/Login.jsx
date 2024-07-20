@@ -70,7 +70,7 @@ export default function Login() {
 
           {/* Login Container */}
           <BlurView
-            style={styles.inputContainer}
+            style={styles.blurViewContainer}
             intensity={80}
             tint="default"
             experimentalBlurMethod="dimezisBlurView"
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     alignSelf: "center",
   },
-  inputContainer: {
+  blurViewContainer: {
     width: "100%",
     height: "76%",
     position: "absolute",
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     overflow: "hidden",
+    backgroundColor: "blue",
   },
   welcomeHeading: {
     fontSize: 30,
