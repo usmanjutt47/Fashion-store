@@ -10,6 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { Ionicons } from "@expo/vector-icons";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -38,17 +39,28 @@ export default function Login() {
               marginTop: 20,
             }}
           >
+            {/* back button pressable */}
             <Pressable
               style={{
                 width: 44,
                 height: 44,
+                justifyContent: "center",
                 backgroundColor: "#9CADBA",
                 borderRadius: 36,
                 zIndex: 99,
+                marginLeft: "5%",
               }}
               onPress={() => navigation.goBack()}
-            ></Pressable>
+            >
+              <Ionicons
+                name="chevron-back"
+                size={24}
+                color="#fff"
+                style={{ alignSelf: "center" }}
+              />
+            </Pressable>
 
+            {/* Elegancia heading section */}
             <View
               style={{
                 flex: 1,
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
   eleganciaHeading: {
     fontWeight: "bold",
     fontSize: 30,
-    fontFamily: "",
+    fontFamily: "GolosText",
     color: "#fff",
     alignSelf: "center",
   },
