@@ -1,18 +1,24 @@
+import React from "react";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import React, { useContext } from "react";
 import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { FontContext } from "../../App";
+import { useFonts } from "expo-font";
 
 export default function OnBoarding() {
-  const navigation = useNavigation(); // Use the hook here
-  const { fontFamily } = useContext(FontContext);
+  const navigation = useNavigation();
+
+  const [loaded] = useFonts({
+    GolosText: require("../../assets/fonts/GolosText[wght].ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
-
+      <StatusBar style="dark" />
       <View style={styles.imageContainer}>
         <Image
           source={require("../../assets/splashAssets/splash.png")}
@@ -24,19 +30,19 @@ export default function OnBoarding() {
         />
       </View>
       <View style={styles.textContainer}>
-        <Text style={[styles.heading1, { fontFamily }]}>Find the Latest</Text>
-        <Text style={[styles.heading2, { fontFamily }]}>Collection</Text>
-        <Text style={[styles.subHeading1, { fontFamily }]}>
+        <Text style={[styles.heading1]}>Find the Latest</Text>
+        <Text style={[styles.heading2]}>Collection</Text>
+        <Text style={[styles.subHeading, { marginTop: 10 }]}>
           Explore the latest fashion collections designed to
         </Text>
-        <Text style={[styles.subHeading2, { fontFamily }]}>
+        <Text style={[styles.subHeading]}>
           reflect modern elegance and style.
         </Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Login")}
         >
-          <Text style={[styles.buttonText, { fontFamily }]}>Get Started</Text>
+          <Text style={[styles.buttonText]}>Get Started</Text>
         </Pressable>
       </View>
     </View>
@@ -62,9 +68,9 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     top: 0,
-    height: "100%",
   },
   heading1: {
+    marginTop: "5%",
     fontWeight: "bold",
     fontSize: 40,
     letterSpacing: 0.5,
@@ -76,15 +82,8 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     textAlign: "center",
   },
-  subHeading1: {
-    fontWeight: "semibold",
-    fontSize: 14,
-    letterSpacing: 0.5,
-    textAlign: "center",
-    marginTop: 10,
-  },
-  subHeading2: {
-    fontWeight: "semibold",
+  subHeading: {
+    fontWeight: "medium", // "semibold" equivalent
     fontSize: 14,
     letterSpacing: 0.5,
     textAlign: "center",
@@ -106,5 +105,7 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     color: "#fff",
+    fontSize: 16,
+    fontFamily: "GolosText",
   },
 });
