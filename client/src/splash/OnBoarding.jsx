@@ -3,6 +3,7 @@ import React from "react";
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { StatusBar } from "expo-status-bar";
 
 export default function OnBoarding() {
   const navigation = useNavigation(); // Use the hook here
@@ -16,6 +17,8 @@ export default function OnBoarding() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
+
       <View style={styles.imageContainer}>
         <Image
           source={require("../../assets/splashAssets/splash.png")}
