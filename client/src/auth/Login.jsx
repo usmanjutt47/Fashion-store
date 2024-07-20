@@ -8,10 +8,19 @@ import {
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
+import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
 export default function Login() {
   const navigation = useNavigation();
+  const [loaded] = useFonts({
+    GolosText: require("../../assets/fonts/GolosText[wght].ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -24,7 +33,6 @@ export default function Login() {
           <View
             style={{
               height: 100,
-              backgroundColor: "red",
               flexDirection: "row",
               alignItems: "center",
               marginTop: 20,
@@ -44,21 +52,11 @@ export default function Login() {
             <View
               style={{
                 flex: 1,
-                backgroundColor: "blue",
                 position: "absolute",
                 width: "100%",
               }}
             >
-              <Text
-                style={{
-                  color: "#fff",
-                  textAlign: "center",
-                  fontSize: 24,
-                  letterSpacing: 2,
-                }}
-              >
-                Elegancia
-              </Text>
+              <Text style={styles.eleganciaHeading}>Elegancia</Text>
             </View>
           </View>
 
@@ -91,7 +89,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     height: 100,
-    backgroundColor: "red",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -105,13 +102,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   eleganciaHeading: {
-    fontSize: 40,
+    fontWeight: "bold",
+    fontSize: 30,
+    fontFamily: "",
     color: "#fff",
     alignSelf: "center",
-    backgroundColor: "blue",
-  },
-  text: {
-    color: "white",
-    fontSize: 16,
   },
 });
