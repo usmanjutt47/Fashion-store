@@ -32,19 +32,19 @@ export default function OnBoarding() {
       <View style={styles.textContainer}>
         <Text style={[styles.heading1]}>Find the Latest</Text>
         <Text style={[styles.heading2]}>Collection</Text>
-        <Text style={[styles.subHeading, { marginTop: 10 }]}>
+        <Text style={[styles.subHeading, { marginTop: "4%" }]}>
           Explore the latest fashion collections designed to
         </Text>
         <Text style={[styles.subHeading]}>
           reflect modern elegance and style.
         </Text>
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text style={[styles.buttonText]}>Get Started</Text>
-        </Pressable>
       </View>
+      <Pressable
+        style={styles.button}
+        onPress={() => navigation.navigate("Login")}
+      >
+        <Text style={[styles.buttonText]}>Get Started</Text>
+      </Pressable>
     </View>
   );
 }
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subHeading: {
-    fontWeight: "medium", // "semibold" equivalent
+    fontWeight: "medium",
     fontSize: 14,
     letterSpacing: 0.5,
     textAlign: "center",
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     width: "85%",
     borderRadius: 36,
     position: "absolute",
-    bottom: 15,
+    bottom: "1%",
+    alignSelf: "center",
   },
   buttonText: {
     textAlign: "center",
