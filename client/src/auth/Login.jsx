@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   ImageBackground,
@@ -16,6 +16,8 @@ export default function Login() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -51,7 +53,7 @@ export default function Login() {
               <Ionicons
                 name="chevron-back"
                 size={24}
-                color="#fff"
+                color="#1E1E1E"
                 style={{ alignSelf: "center" }}
               />
             </Pressable>
@@ -71,7 +73,7 @@ export default function Login() {
           {/* Login Container */}
           <BlurView
             style={styles.blurViewContainer}
-            intensity={80}
+            intensity={100}
             tint="default"
             experimentalBlurMethod="dimezisBlurView"
           >
@@ -82,27 +84,63 @@ export default function Login() {
               {/* Email label and input field */}
               <Text style={styles.label}>Email or phone number</Text>
               <TextInput
-                style={styles.emailInput}
+                style={[
+                  styles.emailInput,
+                  isEmailFocused && {
+                    borderColor: "#fff",
+                    backgroundColor: "#fff",
+                  },
+                ]}
                 placeholder="Enter email or phone number"
-                placeholderTextColor="#6F7072"
-                cursorColor={"#fff"}
+                placeholderTextColor="#4e4e4e"
+                selectionColor={"#000"}
+                cursorColor={"#4e4e4e"}
                 value={email}
                 onChangeText={setEmail}
+                onFocus={() => setIsEmailFocused(true)}
+                onBlur={() => setIsEmailFocused(false)}
                 keyboardType="email-address"
               />
 
               {/* Password label and input field */}
               <Text style={[styles.label, styles.marginTop]}>Password</Text>
               <TextInput
-                style={styles.passwordInput}
+                style={[
+                  styles.passwordInput,
+                  isPasswordFocused && {
+                    borderColor: "#fff",
+                    backgroundColor: "#fff",
+                  },
+                ]}
                 placeholder="Enter Password"
-                placeholderTextColor="#6F7072"
-                cursorColor={"#fff"}
+                placeholderTextColor="#4e4e4e"
+                selectionColor={"#000"}
+                cursorColor={"#004e4e4e"}
                 value={password}
                 onChangeText={setPassword}
+                onFocus={() => setIsPasswordFocused(true)}
+                onBlur={() => setIsPasswordFocused(false)}
                 secureTextEntry
               />
+              <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+                <Text
+                  style={{
+                    color: "#fff",
+                    fontSize: 12,
+                    fontWeight: "semibold",
+                    marginTop: "4%",
+                  }}
+                >
+                  Forgot Password
+                </Text>
+              </Pressable>
             </View>
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("Login")}
+            >
+              <Text style={[styles.buttonText]}>Login</Text>
+            </Pressable>
           </BlurView>
         </ImageBackground>
       </View>
@@ -125,7 +163,7 @@ const styles = StyleSheet.create({
   eleganciaHeading: {
     fontWeight: "bold",
     fontSize: 30,
-    color: "#fff",
+    color: "#1E1E1E",
     alignSelf: "center",
   },
   blurViewContainer: {
@@ -139,18 +177,18 @@ const styles = StyleSheet.create({
   },
   welcomeHeading: {
     fontSize: 30,
-    color: "#fff",
+    color: "#1E1E1E",
     alignSelf: "center",
     marginTop: 20,
   },
   emailPasswordSection: {
     justifyContent: "center",
-    width: "90%",
+    width: "85%",
     alignSelf: "center",
     marginTop: "10%",
   },
   label: {
-    color: "#fff",
+    color: "#1E1E1E",
     fontSize: 16,
     marginBottom: 5,
   },
@@ -158,23 +196,42 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   emailInput: {
+    fontWeight: "bold",
     paddingLeft: 20,
     paddingRight: 20,
-    height: 60,
+    height: 48,
     borderColor: "#6F7072",
     borderWidth: 1,
     borderRadius: 30,
     backgroundColor: "transparent",
-    color: "#fff",
+    color: "#1E1E1E",
   },
   passwordInput: {
+    fontWeight: "bold",
     paddingLeft: 20,
     paddingRight: 20,
-    height: 60,
+    height: 48,
     borderColor: "#6F7072",
     borderWidth: 1,
     borderRadius: 30,
     backgroundColor: "transparent",
+    color: "#1E1E1E",
+  },
+  button: {
+    backgroundColor: "#3AA2ED",
+    height: 48,
+    justifyContent: "center",
+    width: "85%",
+    borderRadius: 36,
+    position: "absolute",
+    alignSelf: "center",
+    bottom: "1%",
+  },
+  buttonText: {
+    fontWeight: "medium",
+    textAlign: "center",
     color: "#fff",
+    fontSize: 16,
+    fontFamily: "GolosText",
   },
 });
