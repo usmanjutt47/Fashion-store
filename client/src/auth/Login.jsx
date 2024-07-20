@@ -1,31 +1,28 @@
+import React, { useContext, useState } from "react";
 import {
   View,
   ImageBackground,
   Text,
   StyleSheet,
   Pressable,
+  TextInput,
 } from "react-native";
-import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
-import { useFonts } from "expo-font";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { FontContext } from "../../App";
 
 export default function Login() {
   const navigation = useNavigation();
-  const [loaded] = useFonts({
-    GolosText: require("../../assets/fonts/GolosText[wght].ttf"),
-  });
-
-  if (!loaded) {
-    return null;
-  }
+  const { fontFamily } = useContext(FontContext);
+  const [email, setEmail] = useState("");
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.imageContainer}>
+        {/* Background Image */}
         <ImageBackground
           source={require("../../assets/splashAssets/splash.png")}
           style={styles.image}
@@ -39,7 +36,7 @@ export default function Login() {
               marginTop: 20,
             }}
           >
-            {/* back button pressable */}
+            {/* Back button */}
             <Pressable
               style={{
                 width: 44,
@@ -60,7 +57,7 @@ export default function Login() {
               />
             </Pressable>
 
-            {/* Elegancia heading section */}
+            {/* Elegancia heading */}
             <View
               style={{
                 flex: 1,
@@ -68,17 +65,39 @@ export default function Login() {
                 width: "100%",
               }}
             >
-              <Text style={styles.eleganciaHeading}>Elegancia</Text>
+              <Text style={[styles.eleganciaHeading, { fontFamily }]}>
+                Elegancia
+              </Text>
             </View>
           </View>
 
+          {/* Login Container */}
           <BlurView
             style={styles.inputContainer}
             intensity={80}
             tint="default"
             experimentalBlurMethod="dimezisBlurView"
           >
-            <Text style={styles.text}>This is another container</Text>
+            <Text style={[styles.welcomeHeading, { fontFamily }]}>Welcome</Text>
+
+            {/* Email & Password section */}
+            <View style={styles.emailPasswordSection}>
+              {/* Email Section */}
+              <View style={styles.emailSection}>
+                <Text style={{ color: "#fff" }}>We’ve send code to</Text>
+                <TextInput
+                  style={styles.emailInput}
+                  placeholder="julianasilva2211@gmail.com"
+                  placeholderTextColor="#fff"
+                  cursorColor={"#fff"}
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                />
+              </View>
+              {/* Password section */}
+              <View style={styles.passwordSection}></View>
+            </View>
           </BlurView>
         </ImageBackground>
       </View>
@@ -97,12 +116,12 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    // resizeMode: "cover",
   },
-  headerContainer: {
-    height: 100,
-    flexDirection: "row",
-    alignItems: "center",
+  eleganciaHeading: {
+    fontWeight: "bold",
+    fontSize: 30,
+    color: "#fff",
+    alignSelf: "center",
   },
   inputContainer: {
     width: "100%",
@@ -113,11 +132,29 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     overflow: "hidden",
   },
-  eleganciaHeading: {
-    fontWeight: "bold",
+  welcomeHeading: {
     fontSize: 30,
-    fontFamily: "GolosText",
     color: "#fff",
     alignSelf: "center",
+    marginTop: 20,
   },
+  emailPasswordSection: {
+    justifyContent: "center",
+    width: "90%",
+    alignSelf: "center",
+  },
+  emailSection: {},
+  emailInput: {
+    marginTop: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    height: 60,
+    borderColor: "#6F7072",
+    borderWidth: 1,
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    backgroundColor: "transparent",
+    color: "#fff",
+  },
+  passwordSection: {},
 });
