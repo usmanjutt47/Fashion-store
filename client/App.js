@@ -12,7 +12,7 @@ export const FontContext = createContext();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="OnBoarding">
+      <Stack.Navigator initialRouteName="SignUp">
         <Stack.Screen
           name="Login"
           component={Login}
