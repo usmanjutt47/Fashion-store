@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
     overflow: "hidden",
-    backgroundColor: "blue",
   },
   welcomeHeading: {
     fontSize: 30,
