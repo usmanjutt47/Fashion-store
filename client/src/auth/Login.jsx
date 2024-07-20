@@ -18,6 +18,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -38,25 +39,25 @@ export default function Login() {
             }}
           >
             {/* Back button */}
-            <Pressable
+            <BlurView
               style={{
                 width: 44,
                 height: 44,
                 justifyContent: "center",
-                backgroundColor: "#9CADBA",
                 borderRadius: 36,
-                zIndex: 99,
                 marginLeft: "5%",
+                overflow: "hidden",
               }}
-              onPress={() => navigation.goBack()}
             >
-              <Ionicons
-                name="chevron-back"
-                size={24}
-                color="#1E1E1E"
-                style={{ alignSelf: "center" }}
-              />
-            </Pressable>
+              <Pressable onPress={() => navigation.goBack()}>
+                <Ionicons
+                  name="chevron-back"
+                  size={24}
+                  color="#1E1E1E"
+                  style={{ alignSelf: "center" }}
+                />
+              </Pressable>
+            </BlurView>
 
             {/* Elegancia heading */}
             <View
@@ -104,24 +105,36 @@ export default function Login() {
 
               {/* Password label and input field */}
               <Text style={[styles.label, styles.marginTop]}>Password</Text>
-              <TextInput
-                style={[
-                  styles.passwordInput,
-                  isPasswordFocused && {
-                    borderColor: "#fff",
-                    backgroundColor: "#fff",
-                  },
-                ]}
-                placeholder="Enter Password"
-                placeholderTextColor="#4e4e4e"
-                selectionColor={"#000"}
-                cursorColor={"#004e4e4e"}
-                value={password}
-                onChangeText={setPassword}
-                onFocus={() => setIsPasswordFocused(true)}
-                onBlur={() => setIsPasswordFocused(false)}
-                secureTextEntry
-              />
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={[
+                    styles.passwordInput,
+                    isPasswordFocused && {
+                      borderColor: "#fff",
+                      backgroundColor: "#fff",
+                    },
+                  ]}
+                  placeholder="Enter Password"
+                  placeholderTextColor="#4e4e4e"
+                  selectionColor={"#000"}
+                  cursorColor={"#004e4e4e"}
+                  value={password}
+                  onChangeText={setPassword}
+                  onFocus={() => setIsPasswordFocused(true)}
+                  onBlur={() => setIsPasswordFocused(false)}
+                  secureTextEntry={!showPassword}
+                />
+                <Pressable
+                  style={styles.eyeIcon}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <Ionicons
+                    name={showPassword ? "eye-off" : "eye"}
+                    size={24}
+                    color="#1E1E1E"
+                  />
+                </Pressable>
+              </View>
               <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
                 <Text
                   style={{
@@ -135,12 +148,43 @@ export default function Login() {
                 </Text>
               </Pressable>
             </View>
-            <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("Login")}
+
+            <View
+              style={{
+                width: "80%",
+                alignSelf: "center",
+                position: "absolute",
+                bottom: "1%",
+              }}
             >
-              <Text style={[styles.buttonText]}>Login</Text>
-            </Pressable>
+              <Pressable
+                onPress={() => navigation.navigate("SignUp")}
+                style={{
+                  flexDirection: "row",
+                  marginBottom: "2%",
+                }}
+              >
+                <Text style={{ fontWeight: "medium", color: "#DCDCDB" }}>
+                  Don’t have an account?{" "}
+                </Text>
+                <Pressable onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                    Register
+                  </Text>
+                </Pressable>
+              </Pressable>
+              <Pressable
+                style={{
+                  backgroundColor: "#3AA2ED",
+                  height: 48,
+                  justifyContent: "center",
+                  borderRadius: 33,
+                }}
+                onPress={() => navigation.navigate("Login")}
+              >
+                <Text style={[styles.buttonText]}>Login</Text>
+              </Pressable>
+            </View>
           </BlurView>
         </ImageBackground>
       </View>
@@ -206,10 +250,14 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#1E1E1E",
   },
+  passwordContainer: {
+    position: "relative",
+    width: "100%",
+  },
   passwordInput: {
     fontWeight: "bold",
     paddingLeft: 20,
-    paddingRight: 20,
+    paddingRight: 50,
     height: 48,
     borderColor: "#6F7072",
     borderWidth: 1,
@@ -217,11 +265,19 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#1E1E1E",
   },
+  eyeIcon: {
+    position: "absolute",
+    right: 10,
+    top: 12,
+    height: 24,
+    width: 24,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   button: {
     backgroundColor: "#3AA2ED",
     height: 48,
     justifyContent: "center",
-    width: "85%",
     borderRadius: 36,
     position: "absolute",
     alignSelf: "center",
