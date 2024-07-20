@@ -11,12 +11,11 @@ import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import { FontContext } from "../../App";
 
 export default function Login() {
   const navigation = useNavigation();
-  const { fontFamily } = useContext(FontContext);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
@@ -65,9 +64,7 @@ export default function Login() {
                 width: "100%",
               }}
             >
-              <Text style={[styles.eleganciaHeading, { fontFamily }]}>
-                Elegancia
-              </Text>
+              <Text style={[styles.eleganciaHeading]}>Elegancia</Text>
             </View>
           </View>
 
@@ -78,25 +75,33 @@ export default function Login() {
             tint="default"
             experimentalBlurMethod="dimezisBlurView"
           >
-            <Text style={[styles.welcomeHeading, { fontFamily }]}>Welcome</Text>
+            <Text style={[styles.welcomeHeading]}>Welcome</Text>
 
             {/* Email & Password section */}
             <View style={styles.emailPasswordSection}>
-              {/* Email Section */}
-              <View style={styles.emailSection}>
-                <Text style={{ color: "#fff" }}>We’ve send code to</Text>
-                <TextInput
-                  style={styles.emailInput}
-                  placeholder="julianasilva2211@gmail.com"
-                  placeholderTextColor="#fff"
-                  cursorColor={"#fff"}
-                  value={email}
-                  onChangeText={setEmail}
-                  keyboardType="email-address"
-                />
-              </View>
-              {/* Password section */}
-              <View style={styles.passwordSection}></View>
+              {/* Email label and input field */}
+              <Text style={styles.label}>Email or phone number</Text>
+              <TextInput
+                style={styles.emailInput}
+                placeholder="Enter email or phone number"
+                placeholderTextColor="#6F7072"
+                cursorColor={"#fff"}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType="email-address"
+              />
+
+              {/* Password label and input field */}
+              <Text style={[styles.label, styles.marginTop]}>Password</Text>
+              <TextInput
+                style={styles.passwordInput}
+                placeholder="Enter Password"
+                placeholderTextColor="#6F7072"
+                cursorColor={"#fff"}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
             </View>
           </BlurView>
         </ImageBackground>
@@ -142,19 +147,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "90%",
     alignSelf: "center",
+    marginTop: "10%",
   },
-  emailSection: {},
+  label: {
+    color: "#fff",
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  marginTop: {
+    marginTop: 10,
+  },
   emailInput: {
-    marginTop: 5,
     paddingLeft: 20,
     paddingRight: 20,
     height: 60,
     borderColor: "#6F7072",
     borderWidth: 1,
     borderRadius: 30,
-    paddingHorizontal: 10,
     backgroundColor: "transparent",
     color: "#fff",
   },
-  passwordSection: {},
+  passwordInput: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    height: 60,
+    borderColor: "#6F7072",
+    borderWidth: 1,
+    borderRadius: 30,
+    backgroundColor: "transparent",
+    color: "#fff",
+  },
 });
