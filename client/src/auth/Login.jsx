@@ -6,11 +6,14 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
+  ToastAndroid,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
+import axios from "axios";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -19,6 +22,37 @@ export default function Login() {
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.10.21:8080/api/v1/auth/login",
+        { email, password }
+      );
+      if (response.data.success) {
+        ToastAndroid.showWithGravity(
+          "Login Successful",
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        );
+        navigation.navigate("Home");
+      }
+    } catch (error) {
+      if (error.response) {
+        ToastAndroid.showWithGravity(
+          error.response.data.message || "An error occurred",
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        );
+      } else {
+        ToastAndroid.showWithGravity(
+          "Network error, please try again",
+          ToastAndroid.SHORT,
+          ToastAndroid.TOP
+        );
+      }
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -180,7 +214,7 @@ export default function Login() {
                   justifyContent: "center",
                   borderRadius: 33,
                 }}
-                onPress={() => navigation.navigate("Login")}
+                onPress={handleLogin}
               >
                 <Text style={[styles.buttonText]}>Login</Text>
               </Pressable>
