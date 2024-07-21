@@ -11,6 +11,7 @@ import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import CountryPicker from "react-native-country-picker-modal"; // Import the country picker
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -18,11 +19,17 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-
+  const [country, setCountry] = useState(null); // State to hold the selected country
   const [isNameFocused, setIsNameFocused] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPhoneNumberFocused, setIsPhoneNumberFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [showCountryPicker, setShowCountryPicker] = useState(false); // State to toggle country picker
+
+  const handleSelectCountry = (country) => {
+    setCountry(country);
+    setShowCountryPicker(false); // Hide the picker after selection
+  };
 
   return (
     <View style={styles.container}>
@@ -108,9 +115,7 @@ export default function SignUp() {
               />
 
               {/* Email label and input field */}
-              <Text style={[styles.label, styles.marginTop]}>
-                Email or phone number
-              </Text>
+              <Text style={[styles.label, styles.marginTop]}>Email</Text>
               <TextInput
                 style={[
                   styles.emailInput,
@@ -119,7 +124,7 @@ export default function SignUp() {
                     backgroundColor: "#fff",
                   },
                 ]}
-                placeholder="Enter email or phone number"
+                placeholder="Enter Your Email"
                 placeholderTextColor="#4e4e4e"
                 selectionColor={"#000"}
                 cursorColor={"#4e4e4e"}
@@ -132,6 +137,13 @@ export default function SignUp() {
 
               {/* Phone label and input field */}
               <Text style={styles.label}>Phone number</Text>
+              <Pressable onPress={() => setShowCountryPicker(true)}>
+                <View style={styles.countryPickerContainer}>
+                  <Text style={styles.countryText}>
+                    {country ? country.name : "Select Country"}
+                  </Text>
+                </View>
+              </Pressable>
               <TextInput
                 style={[
                   styles.phoneNumberInput,
@@ -175,34 +187,53 @@ export default function SignUp() {
 
             <View
               style={{
-                backgroundColor: "green",
-                flexDirection: "row",
+                width: "80%",
+                alignSelf: "center",
+                marginTop: "46%",
               }}
             >
-              <Text style={{ position: "absolute", color: "#fff" }}>
-                Already have an account?
-              </Text>
-              <Pressable onPress={() => navigation.navigate("Login")}>
-                <Text
-                  style={{
-                    color: "#3AA2ED",
-                    fontSize: 16,
-                    fontWeight: "semibold",
-                  }}
-                >
-                  Login
+              <Pressable
+                onPress={() => navigation.navigate("SignUp")}
+                style={{
+                  flexDirection: "row",
+                  marginBottom: "2%",
+                }}
+              >
+                <Text style={{ fontWeight: "medium", color: "#DCDCDB" }}>
+                  I have an account?{" "}
                 </Text>
+                <Pressable onPress={() => navigation.navigate("SignUp")}>
+                  <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                    Login
+                  </Text>
+                </Pressable>
+              </Pressable>
+              <Pressable
+                style={{
+                  backgroundColor: "#3AA2ED",
+                  height: 48,
+                  justifyContent: "center",
+                  borderRadius: 33,
+                }}
+                // onPress={handleLogin}
+              >
+                <Text style={[styles.buttonText]}>Sign up</Text>
               </Pressable>
             </View>
-            <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("Login")}
-            >
-              <Text style={[styles.buttonText]}>Sign Up</Text>
-            </Pressable>
           </BlurView>
         </ImageBackground>
       </View>
+
+      {/* Country Picker Modal */}
+      <CountryPicker
+        visible={showCountryPicker}
+        withFilter
+        withFlag
+        withAlphaFilter
+        withCallingCode
+        onSelect={handleSelectCountry}
+        onClose={() => setShowCountryPicker(false)}
+      />
     </View>
   );
 }
@@ -310,9 +341,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "85%",
     borderRadius: 36,
-    position: "absolute",
     alignSelf: "center",
-    bottom: "1%",
+    marginTop: "47%",
   },
   buttonText: {
     fontWeight: "medium",
@@ -320,5 +350,19 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontFamily: "GolosText",
+  },
+  countryPickerContainer: {
+    height: 48,
+    borderColor: "#6F7072",
+    borderWidth: 1,
+    borderRadius: 30,
+    justifyContent: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: "transparent",
+  },
+  countryText: {
+    color: "#1E1E1E",
+    fontWeight: "bold",
   },
 });
