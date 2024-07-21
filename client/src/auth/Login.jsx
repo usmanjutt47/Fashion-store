@@ -12,23 +12,40 @@ import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import Toast from "react-native-toast-message";
 import axios from "axios";
 
 export default function Login() {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
+  const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
+    const isEmail = emailOrPhone.includes("@");
+
     try {
+      const requestData = {
+        email: isEmail ? emailOrPhone : undefined,
+        phone: isEmail ? undefined : emailOrPhone,
+        password: password.trim(),
+      };
+
+      // console.log("Login request data:", requestData);
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
       const response = await axios.post(
-        "http://192.168.10.21:8080/api/v1/auth/login",
-        { email, password }
+        "http://192.168.100.6:8080/api/v1/auth/login",
+        requestData,
+        config
       );
+
       if (response.data.success) {
         ToastAndroid.showWithGravity(
           "Login Successful",
@@ -39,12 +56,14 @@ export default function Login() {
       }
     } catch (error) {
       if (error.response) {
+        console.log("Error Response:", error.response);
         ToastAndroid.showWithGravity(
           error.response.data.message || "An error occurred",
           ToastAndroid.SHORT,
           ToastAndroid.TOP
         );
       } else {
+        // console.log("Network or other error:", error);
         ToastAndroid.showWithGravity(
           "Network error, please try again",
           ToastAndroid.SHORT,
@@ -58,7 +77,6 @@ export default function Login() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.imageContainer}>
-        {/* Background Image */}
         <ImageBackground
           source={require("../../assets/splashAssets/splash.png")}
           style={styles.image}
@@ -72,7 +90,6 @@ export default function Login() {
               marginTop: 20,
             }}
           >
-            {/* Back button */}
             <BlurView
               style={{
                 width: 44,
@@ -93,7 +110,6 @@ export default function Login() {
               </Pressable>
             </BlurView>
 
-            {/* Elegancia heading */}
             <View
               style={{
                 flex: 1,
@@ -105,7 +121,6 @@ export default function Login() {
             </View>
           </View>
 
-          {/* Login Container */}
           <BlurView
             style={styles.blurViewContainer}
             intensity={100}
@@ -114,9 +129,7 @@ export default function Login() {
           >
             <Text style={[styles.welcomeHeading]}>Welcome</Text>
 
-            {/* Email & Password section */}
             <View style={styles.emailPasswordSection}>
-              {/* Email label and input field */}
               <Text style={styles.label}>Email or phone number</Text>
               <TextInput
                 style={[
@@ -130,14 +143,13 @@ export default function Login() {
                 placeholderTextColor="#4e4e4e"
                 selectionColor={"#000"}
                 cursorColor={"#4e4e4e"}
-                value={email}
-                onChangeText={setEmail}
+                value={emailOrPhone}
+                onChangeText={setEmailOrPhone}
                 onFocus={() => setIsEmailFocused(true)}
                 onBlur={() => setIsEmailFocused(false)}
                 keyboardType="email-address"
               />
 
-              {/* Password label and input field */}
               <Text style={[styles.label, styles.marginTop]}>Password</Text>
               <View style={styles.passwordContainer}>
                 <TextInput
@@ -169,8 +181,12 @@ export default function Login() {
                   />
                 </Pressable>
               </View>
-              <Pressable onPress={() => navigation.navigate("ForgotPassword")}>
+              <Pressable
+                onPress={() => navigation.navigate("ForgotPassword")}
+                style={{ width: "24%" }}
+              >
                 <Text
+                  onP
                   style={{
                     color: "#fff",
                     fontSize: 12,
