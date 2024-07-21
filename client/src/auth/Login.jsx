@@ -13,6 +13,7 @@ import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import { useFonts } from "expo-font";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -21,6 +22,13 @@ export default function Login() {
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [loaded] = useFonts({
+    GolosText: require("../../assets/fonts/GolosText[wght].ttf"),
+  });
+  if (!loaded) {
+    return null;
+  }
 
   const handleLogin = async () => {
     const isEmail = emailOrPhone.includes("@");
@@ -31,21 +39,16 @@ export default function Login() {
         phone: isEmail ? undefined : emailOrPhone,
         password: password.trim(),
       };
-
-      // console.log("Login request data:", requestData);
-
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       };
-
       const response = await axios.post(
         "http://192.168.100.6:8080/api/v1/auth/login",
         requestData,
         config
       );
-
       if (response.data.success) {
         ToastAndroid.showWithGravity(
           "Login Successful",
@@ -63,7 +66,6 @@ export default function Login() {
           ToastAndroid.TOP
         );
       } else {
-        // console.log("Network or other error:", error);
         ToastAndroid.showWithGravity(
           "Network error, please try again",
           ToastAndroid.SHORT,
