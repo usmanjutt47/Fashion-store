@@ -161,7 +161,7 @@ const SignUp = ({
             <View style={styles.footerContainer}>
               <Pressable
                 onPress={() => navigation.navigate("SignUp")}
-                style={styles.loginLink}
+                style={{ width: "40%" }}
               >
                 <Text style={styles.loginText}>
                   I have an account?
@@ -178,7 +178,8 @@ const SignUp = ({
                 borderRadius: 33,
                 position: "absolute",
                 bottom: "1%",
-                paddingHorizontal: "20%",
+                paddingHorizontal: "37%",
+                backgroundColor: "#3AA2ED",
               }}
             >
               <Text style={styles.buttonText}>Sign up</Text>
@@ -293,23 +294,16 @@ const styles = StyleSheet.create({
     borderColor: "#4E4E4E",
   },
   footerContainer: {
-    alignItems: "center",
-    marginTop: "30%",
-    marginLeft: "5%",
-    marginRight: "5%",
+    justifyContent: "center",
+    width: "85%",
+    alignSelf: "center",
+    marginTop: "40%",
   },
   loginLink: {},
   loginText: {},
   loginLinkText: {
     color: "#fff",
     fontWeight: "bold",
-  },
-  signUpButton: {
-    backgroundColor: "#3AA2ED",
-    height: 48,
-    justifyContent: "center",
-    borderRadius: 36,
-    alignSelf: "center",
   },
   buttonText: {
     fontWeight: "medium",
