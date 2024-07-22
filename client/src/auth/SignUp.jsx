@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
-  Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
@@ -14,7 +13,14 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import CountryPicker from "react-native-country-picker-modal";
 
-export default function SignUp() {
+const SignUp = ({
+  defaultCountryCode = "US",
+  defaultWithFlag = true,
+  defaultWithEmoji = false,
+  defaultWithFilter = true,
+  defaultWithAlphaFilter = false,
+  defaultWithCallingCode = true,
+}) => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,23 +33,21 @@ export default function SignUp() {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [showCountryPicker, setShowCountryPicker] = useState(false);
 
-  const [countryCode, setCountryCode] = useState("US");
-  const [withCountryNameButton, setWithCountryNameButton] = useState(false); // Hide country name
-  const [withFlag, setWithFlag] = useState(true);
-  const [withEmoji, setWithEmoji] = useState(false);
-  const [withFilter, setWithFilter] = useState(true);
-  const [withAlphaFilter, setWithAlphaFilter] = useState(false);
-  const [withCallingCode, setWithCallingCode] = useState(true);
+  const [countryCode, setCountryCode] = useState(defaultCountryCode);
+  const [withFlag, setWithFlag] = useState(defaultWithFlag);
+  const [withEmoji, setWithEmoji] = useState(defaultWithEmoji);
+  const [withFilter, setWithFilter] = useState(defaultWithFilter);
+  const [withAlphaFilter, setWithAlphaFilter] = useState(
+    defaultWithAlphaFilter
+  );
+  const [withCallingCode, setWithCallingCode] = useState(
+    defaultWithCallingCode
+  );
 
   const handleSelectCountry = (country) => {
     setCountry(country);
     setCountryCode(country.cca2);
     setShowCountryPicker(false);
-  };
-
-  // Method to get the flag image URL
-  const getFlagImageUrl = (countryCode) => {
-    return `https://www.countryflags.io/${countryCode}/shiny/64.png`;
   };
 
   return (
@@ -76,7 +80,7 @@ export default function SignUp() {
             <View style={styles.signUpFormSection}>
               <Text style={styles.label}>Name</Text>
               <TextInput
-                style={[styles.nameInput, isNameFocused && styles.focusedInput]}
+                style={[styles.input, isNameFocused && styles.focusedInput]}
                 placeholder="Enter Your Name"
                 placeholderTextColor="#4e4e4e"
                 value={name}
@@ -87,10 +91,7 @@ export default function SignUp() {
 
               <Text style={[styles.label, styles.marginTop]}>Email</Text>
               <TextInput
-                style={[
-                  styles.emailInput,
-                  isEmailFocused && styles.focusedInput,
-                ]}
+                style={[styles.input, isEmailFocused && styles.focusedInput]}
                 placeholder="Enter Your Email"
                 placeholderTextColor="#4e4e4e"
                 value={email}
@@ -104,7 +105,6 @@ export default function SignUp() {
               <View style={styles.phoneInputWrapper}>
                 <Pressable onPress={() => setShowCountryPicker(true)}>
                   <CountryPicker
-                    containerButtonStyle={{ marginLeft: 15 }}
                     countryCode={countryCode}
                     withFlag={withFlag}
                     withCallingCodeButton={true}
@@ -115,11 +115,16 @@ export default function SignUp() {
                     onSelect={handleSelectCountry}
                     visible={showCountryPicker}
                     onClose={() => setShowCountryPicker(false)}
+                    containerButtonStyle={{
+                      marginLeft: 5,
+                      marginRight: 5,
+                    }}
                   />
                 </Pressable>
 
                 <TextInput
                   style={[
+                    styles.phoneInputType,
                     styles.phoneNumberInput,
                     isPhoneNumberFocused && styles.focusedInput,
                   ]}
@@ -134,10 +139,7 @@ export default function SignUp() {
 
               <Text style={[styles.label, styles.marginTop]}>Password</Text>
               <TextInput
-                style={[
-                  styles.passwordInput,
-                  isPasswordFocused && styles.focusedInput,
-                ]}
+                style={[styles.input, isPasswordFocused && styles.focusedInput]}
                 placeholder="Enter Password"
                 placeholderTextColor="#4e4e4e"
                 value={password}
@@ -155,20 +157,30 @@ export default function SignUp() {
                 style={styles.loginLink}
               >
                 <Text style={styles.loginText}>
-                  I have an account?{" "}
-                  <Text style={styles.loginLinkText}>Login</Text>
+                  I have an account?
+                  <Text style={styles.loginLinkText}> Login</Text>
                 </Text>
               </Pressable>
-              <Pressable style={styles.signUpButton}>
-                <Text style={styles.buttonText}>Sign up</Text>
-              </Pressable>
             </View>
+            <Pressable
+              style={{
+                backgroundColor: "#3AA2ED",
+                height: 48,
+                justifyContent: "center",
+                alignSelf: "center",
+                borderRadius: 33,
+                position: "absolute",
+                bottom: "1%",
+              }}
+            >
+              <Text style={styles.buttonText}>Sign up</Text>
+            </Pressable>
           </BlurView>
         </ImageBackground>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -236,10 +248,9 @@ const styles = StyleSheet.create({
   marginTop: {
     marginTop: 10,
   },
-  nameInput: {
+  input: {
     fontWeight: "bold",
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
     height: 48,
     borderColor: "#6F7072",
     borderWidth: 1,
@@ -247,16 +258,15 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#1E1E1E",
   },
-  emailInput: {
+  phoneInputType: {
     fontWeight: "bold",
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
     height: 48,
     borderColor: "#6F7072",
-    borderWidth: 1,
-    borderRadius: 30,
     backgroundColor: "transparent",
     color: "#1E1E1E",
+    borderTopRightRadius: 30,
+    borderBottomRightRadius: 30,
   },
   phoneInputWrapper: {
     flexDirection: "row",
@@ -267,63 +277,39 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "transparent",
   },
-  flagImage: {
-    width: 48,
-    height: 48,
-    marginLeft: 10,
-  },
-  countryCodeText: {
-    fontWeight: "bold",
-    color: "#1E1E1E",
-    marginLeft: 10,
-    marginRight: 5,
-  },
   phoneNumberInput: {
     flex: 1,
-    paddingLeft: 10,
-    paddingRight: 20,
-    height: 48,
-    backgroundColor: "transparent",
-    color: "#1E1E1E",
-  },
-  passwordInput: {
-    fontWeight: "bold",
-    paddingLeft: 20,
-    paddingRight: 20,
-    height: 48,
-    borderColor: "#6F7072",
-    borderWidth: 1,
-    borderRadius: 30,
-    backgroundColor: "transparent",
-    color: "#1E1E1E",
   },
   focusedInput: {
-    borderColor: "#007bff",
+    backgroundColor: "#ffffff",
+    borderColor: "#4E4E4E",
   },
   footerContainer: {
-    marginTop: 20,
     alignItems: "center",
+    marginTop: "30%",
+    marginLeft: "5%",
+    marginRight: "5%",
   },
-  loginLink: {
-    marginBottom: 10,
-  },
-  loginText: {
-    color: "#1E1E1E",
-    fontSize: 16,
-  },
+  loginLink: {},
+  loginText: {},
   loginLinkText: {
+    color: "#fff",
     fontWeight: "bold",
-    color: "#007bff",
   },
   signUpButton: {
-    backgroundColor: "#007bff",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 30,
+    backgroundColor: "#3AA2ED",
+    height: 48,
+    justifyContent: "center",
+    borderRadius: 36,
+    alignSelf: "center",
   },
   buttonText: {
-    color: "#ffffff",
+    fontWeight: "medium",
+    textAlign: "center",
+    color: "#fff",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "GolosText",
   },
 });
+
+export default SignUp;
