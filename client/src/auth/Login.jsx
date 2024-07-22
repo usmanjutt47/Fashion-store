@@ -31,7 +31,10 @@ export default function Login() {
   }
 
   // office apconfig
+  // PTCL B>B
   // 192.168.10.11
+  // Hammad
+  // 255.255.255.0
 
   const handleLogin = async () => {
     const isEmail = emailOrPhone.includes("@");
@@ -48,7 +51,7 @@ export default function Login() {
         },
       };
       const response = await axios.post(
-        "http://192.168.10.11:8080/api/v1/auth/login",
+        "http://192.168.100.175:8080/api/v1/auth/login",
         requestData,
         config
       );
