@@ -137,13 +137,13 @@ export default function SignUp() {
 
               {/* Phone label and input field */}
               <Text style={styles.label}>Phone number</Text>
-              <Pressable onPress={() => setShowCountryPicker(true)}>
+              {/* <Pressable onPress={() => setShowCountryPicker(true)}>
                 <View style={styles.countryPickerContainer}>
                   <Text style={styles.countryText}>
                     {country ? country.name : "Select Country"}
                   </Text>
                 </View>
-              </Pressable>
+              </Pressable> */}
               <TextInput
                 style={[
                   styles.phoneNumberInput,
@@ -225,7 +225,7 @@ export default function SignUp() {
       </View>
 
       {/* Country Picker Modal */}
-      <CountryPicker
+      {/* <CountryPicker
         visible={showCountryPicker}
         withFilter
         withFlag
@@ -233,7 +233,7 @@ export default function SignUp() {
         withCallingCode
         onSelect={handleSelectCountry}
         onClose={() => setShowCountryPicker(false)}
-      />
+      /> */}
     </View>
   );
 }
