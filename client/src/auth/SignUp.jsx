@@ -62,7 +62,14 @@ const SignUp = ({
           <View style={styles.headerContainer}>
             <BlurView style={styles.backButton}>
               <Pressable onPress={() => navigation.navigate("Login")}>
-                <Ionicons name="chevron-back" size={24} color="#1E1E1E" />
+                <Ionicons
+                  name="chevron-back"
+                  size={24}
+                  style={{
+                    color: "#1e1e1e",
+                    alignSelf: "center",
+                  }}
+                />
               </Pressable>
             </BlurView>
             <View style={styles.headingContainer}>
@@ -171,6 +178,7 @@ const SignUp = ({
                 borderRadius: 33,
                 position: "absolute",
                 bottom: "1%",
+                paddingHorizontal: "20%",
               }}
             >
               <Text style={styles.buttonText}>Sign up</Text>
