@@ -166,7 +166,7 @@ const SignUp = ({
             <View style={styles.footerContainer}>
               <Pressable
                 onPress={() => navigation.navigate("Login")}
-                style={{ width: "40%" }}
+                style={{ width: "50%" }}
               >
                 <Text style={styles.loginText}>
                   I have an account?
