@@ -6,23 +6,17 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
-  KeyboardAvoidingView,
-  Platform,
+  Image,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import CountryPicker from "react-native-country-picker-modal";
+import axios from "axios";
+import Toast from "react-native-toast-message";
 
-const SignUp = ({
-  defaultCountryCode = "US",
-  defaultWithFlag = true,
-  defaultWithEmoji = false,
-  defaultWithFilter = true,
-  defaultWithAlphaFilter = false,
-  defaultWithCallingCode = true,
-}) => {
+export default function SignUp() {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -35,16 +29,13 @@ const SignUp = ({
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [showCountryPicker, setShowCountryPicker] = useState(false);
 
-  const [countryCode, setCountryCode] = useState(defaultCountryCode);
-  const [withFlag, setWithFlag] = useState(defaultWithFlag);
-  const [withEmoji, setWithEmoji] = useState(defaultWithEmoji);
-  const [withFilter, setWithFilter] = useState(defaultWithFilter);
-  const [withAlphaFilter, setWithAlphaFilter] = useState(
-    defaultWithAlphaFilter
-  );
-  const [withCallingCode, setWithCallingCode] = useState(
-    defaultWithCallingCode
-  );
+  const [countryCode, setCountryCode] = useState("US");
+  const [withCountryNameButton, setWithCountryNameButton] = useState(false);
+  const [withFlag, setWithFlag] = useState(true);
+  const [withEmoji, setWithEmoji] = useState(false);
+  const [withFilter, setWithFilter] = useState(true);
+  const [withAlphaFilter, setWithAlphaFilter] = useState(false);
+  const [withCallingCode, setWithCallingCode] = useState(true);
 
   const handleSelectCountry = (country) => {
     setCountry(country);
@@ -52,11 +43,56 @@ const SignUp = ({
     setShowCountryPicker(false);
   };
 
+  const handleRegister = async () => {
+    console.log({
+      name,
+      email,
+      phone: phoneNumber,
+      password,
+    });
+
+    try {
+      const response = await axios.post(
+        "http://192.168.10.5:8080/api/v1/auth/register",
+        {
+          name,
+          email,
+          phone: phoneNumber,
+          password,
+        }
+      );
+
+      if (response.data.success) {
+        Toast.show({
+          type: "success",
+          text1: "Registration Successful",
+          text2: "Please login with your credentials",
+          visibilityTime: 500,
+          onHide: () => {
+            navigation.navigate("Login");
+          },
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Registration Failed",
+          text2: response.data.message || "An error occurred",
+        });
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      Toast.show({
+        type: "error",
+        text1: "Registration Failed",
+        text2:
+          error.response?.data?.message ||
+          "An error occurred while registering user",
+      });
+    }
+  };
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.imageContainer}>
         <ImageBackground
@@ -67,14 +103,7 @@ const SignUp = ({
           <View style={styles.headerContainer}>
             <BlurView style={styles.backButton}>
               <Pressable onPress={() => navigation.navigate("Login")}>
-                <Ionicons
-                  name="chevron-back"
-                  size={24}
-                  style={{
-                    color: "#1e1e1e",
-                    alignSelf: "center",
-                  }}
-                />
+                <Ionicons name="chevron-back" size={24} color="#1E1E1E" />
               </Pressable>
             </BlurView>
             <View style={styles.headingContainer}>
@@ -92,7 +121,7 @@ const SignUp = ({
             <View style={styles.signUpFormSection}>
               <Text style={styles.label}>Name</Text>
               <TextInput
-                style={[styles.input, isNameFocused && styles.focusedInput]}
+                style={[styles.nameInput, isNameFocused && styles.focusedInput]}
                 placeholder="Enter Your Name"
                 placeholderTextColor="#4e4e4e"
                 value={name}
@@ -103,7 +132,10 @@ const SignUp = ({
 
               <Text style={[styles.label, styles.marginTop]}>Email</Text>
               <TextInput
-                style={[styles.input, isEmailFocused && styles.focusedInput]}
+                style={[
+                  styles.emailInput,
+                  isEmailFocused && styles.focusedInput,
+                ]}
                 placeholder="Enter Your Email"
                 placeholderTextColor="#4e4e4e"
                 value={email}
@@ -117,6 +149,7 @@ const SignUp = ({
               <View style={styles.phoneInputWrapper}>
                 <Pressable onPress={() => setShowCountryPicker(true)}>
                   <CountryPicker
+                    containerButtonStyle={{ marginLeft: 15 }}
                     countryCode={countryCode}
                     withFlag={withFlag}
                     withCallingCodeButton={true}
@@ -127,16 +160,11 @@ const SignUp = ({
                     onSelect={handleSelectCountry}
                     visible={showCountryPicker}
                     onClose={() => setShowCountryPicker(false)}
-                    containerButtonStyle={{
-                      marginLeft: 5,
-                      marginRight: 5,
-                    }}
                   />
                 </Pressable>
 
                 <TextInput
                   style={[
-                    styles.phoneInputType,
                     styles.phoneNumberInput,
                     isPhoneNumberFocused && styles.focusedInput,
                   ]}
@@ -151,7 +179,10 @@ const SignUp = ({
 
               <Text style={[styles.label, styles.marginTop]}>Password</Text>
               <TextInput
-                style={[styles.input, isPasswordFocused && styles.focusedInput]}
+                style={[
+                  styles.passwordInput,
+                  isPasswordFocused && styles.focusedInput,
+                ]}
                 placeholder="Enter Password"
                 placeholderTextColor="#4e4e4e"
                 value={password}
@@ -166,7 +197,7 @@ const SignUp = ({
             <View style={styles.footerContainer}>
               <Pressable
                 onPress={() => navigation.navigate("Login")}
-                style={{ width: "40%" }}
+                style={{ width: "50%" }}
               >
                 <Text style={styles.loginText}>
                   I have an account?
@@ -175,20 +206,16 @@ const SignUp = ({
               </Pressable>
             </View>
 
-            <Pressable
-              style={styles.signUpButton}
-              onPress={() => {
-                /* Your sign-up logic here */
-              }}
-            >
+            <Pressable style={styles.signUpButton} onPress={handleRegister}>
               <Text style={styles.buttonText}>Sign up</Text>
             </Pressable>
           </BlurView>
         </ImageBackground>
       </View>
-    </KeyboardAvoidingView>
+      <Toast />
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -256,9 +283,10 @@ const styles = StyleSheet.create({
   marginTop: {
     marginTop: 10,
   },
-  input: {
+  nameInput: {
     fontWeight: "bold",
-    paddingLeft: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     height: 48,
     borderColor: "#6F7072",
     borderWidth: 1,
@@ -266,15 +294,16 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#1E1E1E",
   },
-  phoneInputType: {
+  emailInput: {
     fontWeight: "bold",
-    paddingLeft: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
     height: 48,
     borderColor: "#6F7072",
+    borderWidth: 1,
+    borderRadius: 30,
     backgroundColor: "transparent",
     color: "#1E1E1E",
-    borderTopRightRadius: 30,
-    borderBottomRightRadius: 30,
   },
   phoneInputWrapper: {
     flexDirection: "row",
@@ -282,15 +311,28 @@ const styles = StyleSheet.create({
     borderColor: "#6F7072",
     borderWidth: 1,
     borderRadius: 30,
+    height: 48,
     marginTop: 10,
-    backgroundColor: "transparent",
   },
   phoneNumberInput: {
     flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    color: "#1E1E1E",
+  },
+  passwordInput: {
+    fontWeight: "bold",
+    paddingLeft: 20,
+    paddingRight: 20,
+    height: 48,
+    borderColor: "#6F7072",
+    borderWidth: 1,
+    borderRadius: 30,
+    backgroundColor: "transparent",
+    color: "#1E1E1E",
   },
   focusedInput: {
-    backgroundColor: "#ffffff",
-    borderColor: "#4E4E4E",
+    borderColor: "#1E1E1E",
   },
   footerContainer: {
     justifyContent: "center",
@@ -298,12 +340,17 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: "40%",
   },
-  loginText: {},
+  loginLink: {
+    marginBottom: 10,
+  },
+  loginText: {
+    color: "#1E1E1E",
+    fontSize: 16,
+  },
   loginLinkText: {
     color: "#fff",
     fontWeight: "bold",
   },
-
   signUpButton: {
     backgroundColor: "#3AA2ED",
     height: 48,
@@ -322,5 +369,3 @@ const styles = StyleSheet.create({
     fontFamily: "GolosText",
   },
 });
-
-export default SignUp;

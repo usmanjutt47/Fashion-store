@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { useFonts } from "expo-font";
+import Toast from "react-native-toast-message";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -47,7 +48,7 @@ export default function Login() {
         },
       };
       const response = await axios.post(
-        "http://192.168.100.175:8080/api/v1/auth/login",
+        "http://192.168.10.5:8080/api/v1/auth/login",
         requestData,
         config
       );
