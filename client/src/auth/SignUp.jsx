@@ -165,7 +165,7 @@ const SignUp = ({
 
             <View style={styles.footerContainer}>
               <Pressable
-                onPress={() => navigation.navigate("SignUp")}
+                onPress={() => navigation.navigate("Login")}
                 style={{ width: "40%" }}
               >
                 <Text style={styles.loginText}>
@@ -174,17 +174,11 @@ const SignUp = ({
                 </Text>
               </Pressable>
             </View>
+
             <Pressable
-              style={{
-                backgroundColor: "#3AA2ED",
-                height: 48,
-                justifyContent: "center",
-                alignSelf: "center",
-                borderRadius: 33,
-                paddingHorizontal: "37%",
-                backgroundColor: "#3AA2ED",
-                possition: "absolute",
-                marginBottom: "1%",
+              style={styles.signUpButton}
+              onPress={() => {
+                /* Your sign-up logic here */
               }}
             >
               <Text style={styles.buttonText}>Sign up</Text>
@@ -308,6 +302,17 @@ const styles = StyleSheet.create({
   loginLinkText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+
+  signUpButton: {
+    backgroundColor: "#3AA2ED",
+    height: 48,
+    justifyContent: "center",
+    borderRadius: 33,
+    marginTop: "4%",
+    width: "85%",
+    alignItems: "center",
+    alignSelf: "center",
   },
   buttonText: {
     fontWeight: "medium",
