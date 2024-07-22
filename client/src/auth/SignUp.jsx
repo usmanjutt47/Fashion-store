@@ -137,31 +137,36 @@ export default function SignUp() {
 
               {/* Phone label and input field */}
               <Text style={styles.label}>Phone number</Text>
-              {/* <Pressable onPress={() => setShowCountryPicker(true)}>
-                <View style={styles.countryPickerContainer}>
+              <View style={styles.phoneInputContainer}>
+                <Pressable
+                  style={styles.countryPickerButton}
+                  onPress={() => setShowCountryPicker(true)}
+                >
                   <Text style={styles.countryText}>
-                    {country ? country.name : "Select Country"}
+                    {country ? `+${country.callingCode[0]}` : "+00"}
                   </Text>
-                </View>
-              </Pressable> */}
-              <TextInput
-                style={[
-                  styles.phoneNumberInput,
-                  isPhoneNumberFocused && {
-                    borderColor: "#fff",
-                    backgroundColor: "#fff",
-                  },
-                ]}
-                placeholder="Enter Your Phone Number"
-                placeholderTextColor="#4e4e4e"
-                selectionColor={"#000"}
-                cursorColor={"#4e4e4e"}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-                onFocus={() => setIsPhoneNumberFocused(true)}
-                onBlur={() => setIsPhoneNumberFocused(false)}
-                keyboardType="name-phone-pad"
-              />
+
+                  <Ionicons name="chevron-down" size={24} color="#1E1E1E" />
+                </Pressable>
+                <TextInput
+                  style={[
+                    styles.phoneNumberInput,
+                    isPhoneNumberFocused && {
+                      borderColor: "#fff",
+                      backgroundColor: "#fff",
+                    },
+                  ]}
+                  placeholder="Enter Your Phone Number"
+                  placeholderTextColor="#4e4e4e"
+                  selectionColor={"#000"}
+                  cursorColor={"#4e4e4e"}
+                  value={phoneNumber}
+                  onChangeText={setPhoneNumber}
+                  onFocus={() => setIsPhoneNumberFocused(true)}
+                  onBlur={() => setIsPhoneNumberFocused(false)}
+                  keyboardType="name-phone-pad"
+                />
+              </View>
 
               {/* Password label and input field */}
               <Text style={[styles.label, styles.marginTop]}>Password</Text>
@@ -223,17 +228,12 @@ export default function SignUp() {
           </BlurView>
         </ImageBackground>
       </View>
-
-      {/* Country Picker Modal */}
-      {/* <CountryPicker
+      <CountryPicker
         visible={showCountryPicker}
-        withFilter
-        withFlag
-        withAlphaFilter
         withCallingCode
         onSelect={handleSelectCountry}
         onClose={() => setShowCountryPicker(false)}
-      /> */}
+      />
     </View>
   );
 }
@@ -313,16 +313,32 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#1E1E1E",
   },
-  phoneNumberInput: {
-    fontWeight: "bold",
-    paddingLeft: 20,
-    paddingRight: 20,
+  phoneInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     height: 48,
     borderColor: "#6F7072",
     borderWidth: 1,
     borderRadius: 30,
+    // paddingLeft: 20,
     backgroundColor: "transparent",
+  },
+  countryPickerButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 10,
+    overflow: "hidden",
+  },
+  countryText: {
     color: "#1E1E1E",
+    fontWeight: "bold",
+  },
+  phoneNumberInput: {
+    flex: 1,
+    fontWeight: "bold",
+    color: "#1E1E1E",
+    height: "100%",
+    width: "100%",
   },
   passwordInput: {
     fontWeight: "bold",
@@ -350,19 +366,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontFamily: "GolosText",
-  },
-  countryPickerContainer: {
-    height: 48,
-    borderColor: "#6F7072",
-    borderWidth: 1,
-    borderRadius: 30,
-    justifyContent: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-    backgroundColor: "transparent",
-  },
-  countryText: {
-    color: "#1E1E1E",
-    fontWeight: "bold",
   },
 });
