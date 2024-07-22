@@ -7,6 +7,8 @@ import {
   Pressable,
   TextInput,
   ToastAndroid,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
@@ -29,12 +31,6 @@ export default function Login() {
   if (!loaded) {
     return null;
   }
-
-  // office apconfig
-  // PTCL B>B
-  // 192.168.10.11
-  // Hammad
-  // 255.255.255.0
 
   const handleLogin = async () => {
     const isEmail = emailOrPhone.includes("@");
@@ -82,7 +78,10 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <StatusBar style="auto" />
       <View style={styles.imageContainer}>
         <ImageBackground
@@ -197,7 +196,6 @@ export default function Login() {
                 }}
               >
                 <Text
-                  onP
                   style={{
                     color: "#fff",
                     fontSize: 12,
@@ -248,7 +246,7 @@ export default function Login() {
           </BlurView>
         </ImageBackground>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
