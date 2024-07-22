@@ -30,6 +30,9 @@ export default function Login() {
     return null;
   }
 
+  // office apconfig
+  // 192.168.10.11
+
   const handleLogin = async () => {
     const isEmail = emailOrPhone.includes("@");
 
@@ -45,7 +48,7 @@ export default function Login() {
         },
       };
       const response = await axios.post(
-        "http://192.168.100.6:8080/api/v1/auth/login",
+        "http://192.168.10.11:8080/api/v1/auth/login",
         requestData,
         config
       );
