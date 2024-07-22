@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
@@ -51,7 +53,10 @@ const SignUp = ({
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <StatusBar style="auto" />
       <View style={styles.imageContainer}>
         <ImageBackground
@@ -176,8 +181,6 @@ const SignUp = ({
                 justifyContent: "center",
                 alignSelf: "center",
                 borderRadius: 33,
-                position: "absolute",
-                bottom: "1%",
                 paddingHorizontal: "37%",
                 backgroundColor: "#3AA2ED",
               }}
@@ -187,7 +190,7 @@ const SignUp = ({
           </BlurView>
         </ImageBackground>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -299,7 +302,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: "40%",
   },
-  loginLink: {},
   loginText: {},
   loginLinkText: {
     color: "#fff",
