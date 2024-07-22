@@ -183,6 +183,8 @@ const SignUp = ({
                 borderRadius: 33,
                 paddingHorizontal: "37%",
                 backgroundColor: "#3AA2ED",
+                possition: "absolute",
+                marginBottom: "1%",
               }}
             >
               <Text style={styles.buttonText}>Sign up</Text>
