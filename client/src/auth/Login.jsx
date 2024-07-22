@@ -188,7 +188,10 @@ export default function Login() {
               </View>
               <Pressable
                 onPress={() => navigation.navigate("ForgotPassword")}
-                style={{ width: "24%" }}
+                style={{
+                  width: "28%",
+                  marginTop: "4%",
+                }}
               >
                 <Text
                   onP
@@ -196,7 +199,6 @@ export default function Login() {
                     color: "#fff",
                     fontSize: 12,
                     fontWeight: "semibold",
-                    marginTop: "4%",
                   }}
                 >
                   Forgot Password?
