@@ -16,7 +16,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { useFonts } from "expo-font";
-import Toast from "react-native-toast-message";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -48,7 +47,7 @@ export default function Login() {
         },
       };
       const response = await axios.post(
-        "http://192.168.10.5:8080/api/v1/auth/login",
+        "http://192.168.10.10:8080/api/v1/auth/login",
         requestData,
         config
       );
@@ -135,114 +134,118 @@ export default function Login() {
             tint="default"
             experimentalBlurMethod="dimezisBlurView"
           >
-            <Text style={[styles.welcomeHeading]}>Welcome</Text>
-
-            <View style={styles.emailPasswordSection}>
-              <Text style={styles.label}>Email or phone number</Text>
-              <TextInput
-                style={[
-                  styles.emailInput,
-                  isEmailFocused && {
-                    borderColor: "#fff",
-                    backgroundColor: "#fff",
-                  },
-                ]}
-                placeholder="Enter email or phone number"
-                placeholderTextColor="#4e4e4e"
-                selectionColor={"#000"}
-                cursorColor={"#4e4e4e"}
-                value={emailOrPhone}
-                onChangeText={setEmailOrPhone}
-                onFocus={() => setIsEmailFocused(true)}
-                onBlur={() => setIsEmailFocused(false)}
-                keyboardType="email-address"
-              />
-
-              <Text style={[styles.label, styles.marginTop]}>Password</Text>
-              <View style={styles.passwordContainer}>
+            <View
+              style={{
+                height: "100%",
+                width: "100%",
+                justifyContent: "space-between",
+                padding: "5%",
+              }}
+            >
+              <View
+                style={{
+                  marginTop: "5%",
+                }}
+              >
+                <Text style={[styles.welcomeHeading]}>Welcome</Text>
+                <Text style={styles.label}>Email or phone number</Text>
                 <TextInput
                   style={[
-                    styles.passwordInput,
-                    isPasswordFocused && {
+                    styles.emailInput,
+                    isEmailFocused && {
                       borderColor: "#fff",
                       backgroundColor: "#fff",
                     },
                   ]}
-                  placeholder="Enter Password"
+                  placeholder="Enter email or phone number"
                   placeholderTextColor="#4e4e4e"
                   selectionColor={"#000"}
-                  cursorColor={"#004e4e4e"}
-                  value={password}
-                  onChangeText={setPassword}
-                  onFocus={() => setIsPasswordFocused(true)}
-                  onBlur={() => setIsPasswordFocused(false)}
-                  secureTextEntry={!showPassword}
+                  cursorColor={"#4e4e4e"}
+                  value={emailOrPhone}
+                  onChangeText={setEmailOrPhone}
+                  onFocus={() => setIsEmailFocused(true)}
+                  onBlur={() => setIsEmailFocused(false)}
+                  keyboardType="email-address"
                 />
-                <Pressable
-                  style={styles.eyeIcon}
-                  onPress={() => setShowPassword(!showPassword)}
-                >
-                  <Ionicons
-                    name={showPassword ? "eye-off" : "eye"}
-                    size={24}
-                    color="#1E1E1E"
+
+                <Text style={[styles.label, styles.marginTop]}>Password</Text>
+                <View style={styles.passwordContainer}>
+                  <TextInput
+                    style={[
+                      styles.passwordInput,
+                      isPasswordFocused && {
+                        borderColor: "#fff",
+                        backgroundColor: "#fff",
+                      },
+                    ]}
+                    placeholder="Enter Password"
+                    placeholderTextColor="#4e4e4e"
+                    selectionColor={"#000"}
+                    cursorColor={"#004e4e4e"}
+                    value={password}
+                    onChangeText={setPassword}
+                    onFocus={() => setIsPasswordFocused(true)}
+                    onBlur={() => setIsPasswordFocused(false)}
+                    secureTextEntry={!showPassword}
                   />
-                </Pressable>
+                  <Pressable
+                    style={styles.eyeIcon}
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Ionicons
+                      name={showPassword ? "eye-off" : "eye"}
+                      size={24}
+                      color="#1E1E1E"
+                    />
+                  </Pressable>
+                  <Pressable
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                    style={{
+                      width: "28%",
+                      marginTop: "4%",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#fff",
+                        fontSize: 12,
+                        fontWeight: "semibold",
+                      }}
+                    >
+                      Forgot Password?
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
-              <Pressable
-                onPress={() => navigation.navigate("ForgotPassword")}
-                style={{
-                  width: "28%",
-                  marginTop: "4%",
-                }}
-              >
-                <Text
+              <View>
+                <Pressable
+                  onPress={() => navigation.navigate("SignUp")}
                   style={{
-                    color: "#fff",
-                    fontSize: 12,
-                    fontWeight: "semibold",
+                    flexDirection: "row",
+                    marginBottom: "2%",
                   }}
                 >
-                  Forgot Password?
-                </Text>
-              </Pressable>
-            </View>
-
-            <View
-              style={{
-                width: "80%",
-                alignSelf: "center",
-                position: "absolute",
-                bottom: "1%",
-              }}
-            >
-              <Pressable
-                onPress={() => navigation.navigate("SignUp")}
-                style={{
-                  flexDirection: "row",
-                  marginBottom: "2%",
-                }}
-              >
-                <Text style={{ fontWeight: "medium", color: "#DCDCDB" }}>
-                  Don’t have an account?{" "}
-                </Text>
-                <Pressable onPress={() => navigation.navigate("SignUp")}>
-                  <Text style={{ fontWeight: "bold", color: "#fff" }}>
-                    Register
+                  <Text style={{ fontWeight: "medium", color: "#DCDCDB" }}>
+                    Don’t have an account?{" "}
                   </Text>
+                  <Pressable onPress={() => navigation.navigate("SignUp")}>
+                    <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                      Register
+                    </Text>
+                  </Pressable>
                 </Pressable>
-              </Pressable>
-              <Pressable
-                style={{
-                  backgroundColor: "#3AA2ED",
-                  height: 48,
-                  justifyContent: "center",
-                  borderRadius: 33,
-                }}
-                onPress={handleLogin}
-              >
-                <Text style={[styles.buttonText]}>Login</Text>
-              </Pressable>
+                <Pressable
+                  style={{
+                    backgroundColor: "#3AA2ED",
+                    height: 48,
+                    justifyContent: "center",
+                    borderRadius: 33,
+                  }}
+                  onPress={handleLogin}
+                >
+                  <Text style={[styles.buttonText]}>Login</Text>
+                </Pressable>
+              </View>
             </View>
           </BlurView>
         </ImageBackground>
@@ -282,13 +285,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: "#1E1E1E",
     alignSelf: "center",
-    marginTop: 20,
+    marginBottom: "15%",
   },
   emailPasswordSection: {
     justifyContent: "center",
-    width: "85%",
-    alignSelf: "center",
-    marginTop: "10%",
   },
   label: {
     color: "#1E1E1E",

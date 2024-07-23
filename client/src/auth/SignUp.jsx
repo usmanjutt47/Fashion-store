@@ -6,13 +6,13 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
-  Image,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { BlurView } from "expo-blur";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
-import CountryPicker from "react-native-country-picker-modal";
+import CountryCodeDropdownPicker from "react-native-dropdown-country-picker";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 
@@ -22,26 +22,14 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [country, setCountry] = useState(null);
   const [isNameFocused, setIsNameFocused] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPhoneNumberFocused, setIsPhoneNumberFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [showCountryPicker, setShowCountryPicker] = useState(false);
 
-  const [countryCode, setCountryCode] = useState("US");
-  const [withCountryNameButton, setWithCountryNameButton] = useState(false);
-  const [withFlag, setWithFlag] = useState(true);
-  const [withEmoji, setWithEmoji] = useState(false);
-  const [withFilter, setWithFilter] = useState(true);
-  const [withAlphaFilter, setWithAlphaFilter] = useState(false);
-  const [withCallingCode, setWithCallingCode] = useState(true);
-
-  const handleSelectCountry = (country) => {
-    setCountry(country);
-    setCountryCode(country.cca2);
-    setShowCountryPicker(false);
-  };
+  const [selected, setSelected] = useState("+92");
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleRegister = async () => {
     console.log({
@@ -53,7 +41,7 @@ export default function SignUp() {
 
     try {
       const response = await axios.post(
-        "http://192.168.10.5:8080/api/v1/auth/register",
+        "http://192.168.10.10:8080/api/v1/auth/register",
         {
           name,
           email,
@@ -72,6 +60,11 @@ export default function SignUp() {
             navigation.navigate("Login");
           },
         });
+        // Clear input fields
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+        setPassword("");
       } else {
         Toast.show({
           type: "error",
@@ -102,8 +95,16 @@ export default function SignUp() {
         >
           <View style={styles.headerContainer}>
             <BlurView style={styles.backButton}>
-              <Pressable onPress={() => navigation.navigate("Login")}>
-                <Ionicons name="chevron-back" size={24} color="#1E1E1E" />
+              <Pressable
+                onPress={() => navigation.navigate("Login")}
+                style={{ justifyContent: "center" }}
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={24}
+                  color="#1E1E1E"
+                  style={{ alignSelf: "center" }}
+                />
               </Pressable>
             </BlurView>
             <View style={styles.headingContainer}>
@@ -117,98 +118,115 @@ export default function SignUp() {
             tint="default"
             experimentalBlurMethod="dimezisBlurView"
           >
-            <Text style={styles.createAccountHeading}>Create Account</Text>
-            <View style={styles.signUpFormSection}>
-              <Text style={styles.label}>Name</Text>
-              <TextInput
-                style={[styles.nameInput, isNameFocused && styles.focusedInput]}
-                placeholder="Enter Your Name"
-                placeholderTextColor="#4e4e4e"
-                value={name}
-                onChangeText={setName}
-                onFocus={() => setIsNameFocused(true)}
-                onBlur={() => setIsNameFocused(false)}
-              />
-
-              <Text style={[styles.label, styles.marginTop]}>Email</Text>
-              <TextInput
-                style={[
-                  styles.emailInput,
-                  isEmailFocused && styles.focusedInput,
-                ]}
-                placeholder="Enter Your Email"
-                placeholderTextColor="#4e4e4e"
-                value={email}
-                onChangeText={setEmail}
-                onFocus={() => setIsEmailFocused(true)}
-                onBlur={() => setIsEmailFocused(false)}
-                keyboardType="email-address"
-              />
-
-              <Text style={styles.label}>Phone number</Text>
-              <View style={styles.phoneInputWrapper}>
-                <Pressable onPress={() => setShowCountryPicker(true)}>
-                  <CountryPicker
-                    containerButtonStyle={{ marginLeft: 15 }}
-                    countryCode={countryCode}
-                    withFlag={withFlag}
-                    withCallingCodeButton={true}
-                    withEmoji={withEmoji}
-                    withFilter={withFilter}
-                    withAlphaFilter={withAlphaFilter}
-                    withCallingCode={withCallingCode}
-                    onSelect={handleSelectCountry}
-                    visible={showCountryPicker}
-                    onClose={() => setShowCountryPicker(false)}
+            <View
+              style={{
+                flexDirection: "column",
+                height: "100%",
+                width: "100%",
+                justifyContent: "space-between",
+                padding: "5%",
+              }}
+            >
+              <View>
+                <Text style={styles.createAccountHeading}>Create Account</Text>
+                <View style={styles.signUpFormSection}>
+                  <Text style={styles.label}>Name</Text>
+                  <TextInput
+                    style={[styles.input]}
+                    placeholder="Enter Your Name"
+                    placeholderTextColor="#4e4e4e"
+                    value={name}
+                    onChangeText={setName}
+                    onFocus={() => setIsNameFocused(true)}
+                    onBlur={() => setIsNameFocused(false)}
                   />
-                </Pressable>
 
-                <TextInput
-                  style={[
-                    styles.phoneNumberInput,
-                    isPhoneNumberFocused && styles.focusedInput,
-                  ]}
-                  placeholder="Enter Your Phone Number"
-                  placeholderTextColor="#4e4e4e"
-                  value={phoneNumber}
-                  onChangeText={setPhoneNumber}
-                  onFocus={() => setIsPhoneNumberFocused(true)}
-                  onBlur={() => setIsPhoneNumberFocused(false)}
-                />
+                  <Text style={[styles.label, styles.marginTop]}>Email</Text>
+                  <TextInput
+                    style={[styles.input]}
+                    placeholder="Enter Your Email"
+                    placeholderTextColor="#4e4e4e"
+                    value={email}
+                    onChangeText={setEmail}
+                    onFocus={() => setIsEmailFocused(true)}
+                    onBlur={() => setIsEmailFocused(false)}
+                    keyboardType="email-address"
+                  />
+
+                  <Text style={styles.label}>Phone number</Text>
+                  <TouchableWithoutFeedback
+                    onPressIn={() => setIsPhoneNumberFocused(true)}
+                    onPressOut={() => setIsPhoneNumberFocused(false)}
+                  >
+                    <View style={[styles.countryContainer]}>
+                      <CountryCodeDropdownPicker
+                        selected={selected}
+                        setSelected={setSelected}
+                        setCountryDetails={setCountry}
+                        phone={phone}
+                        setPhone={setPhone}
+                        countryCodeTextStyles={styles.countryCodeTextStyle}
+                        dropdownStyles={styles.dropDownStyle}
+                        searchStyles={styles.searchStyle}
+                        countryCodeContainerStyles={styles.countryCodeContainer}
+                        phoneStyles={styles.phoneStyle}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
+
+                  <Text style={[styles.label, styles.marginTop]}>Password</Text>
+                  <TextInput
+                    style={[styles.input]}
+                    placeholder="Enter Password"
+                    placeholderTextColor="#4e4e4e"
+                    value={password}
+                    onChangeText={setPassword}
+                    onFocus={() => setIsPasswordFocused(true)}
+                    onBlur={() => setIsPasswordFocused(false)}
+                    secureTextEntry
+                  />
+                </View>
+                <StatusBar style="auto" />
               </View>
+              <View>
+                <View>
+                  <Pressable
+                    onPress={() => navigation.navigate("Login")}
+                    style={{ marginBottom: "1%" }}
+                  >
+                    <Text style={{ color: "#c3c3c3" }}>
+                      I have an account?
+                      <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                        {"  "}
+                        Login
+                      </Text>
+                    </Text>
+                  </Pressable>
+                </View>
 
-              <Text style={[styles.label, styles.marginTop]}>Password</Text>
-              <TextInput
-                style={[
-                  styles.passwordInput,
-                  isPasswordFocused && styles.focusedInput,
-                ]}
-                placeholder="Enter Password"
-                placeholderTextColor="#4e4e4e"
-                value={password}
-                onChangeText={setPassword}
-                onFocus={() => setIsPasswordFocused(true)}
-                onBlur={() => setIsPasswordFocused(false)}
-                secureTextEntry
-              />
+                <Pressable
+                  onPress={handleRegister}
+                  style={{
+                    backgroundColor: "#3AA2ED",
+                    height: 48,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 16,
+                      color: "#fff",
+                      fontWeight: "medium",
+                      letterSpacing: 0.5,
+                    }}
+                  >
+                    Sign up
+                  </Text>
+                </Pressable>
+              </View>
             </View>
-            <StatusBar style="auto" />
-
-            <View style={styles.footerContainer}>
-              <Pressable
-                onPress={() => navigation.navigate("Login")}
-                style={{ width: "50%" }}
-              >
-                <Text style={styles.loginText}>
-                  I have an account?
-                  <Text style={styles.loginLinkText}> Login</Text>
-                </Text>
-              </Pressable>
-            </View>
-
-            <Pressable style={styles.signUpButton} onPress={handleRegister}>
-              <Text style={styles.buttonText}>Sign up</Text>
-            </Pressable>
           </BlurView>
         </ImageBackground>
       </View>
@@ -271,8 +289,6 @@ const styles = StyleSheet.create({
   },
   signUpFormSection: {
     justifyContent: "center",
-    width: "85%",
-    alignSelf: "center",
     marginTop: "10%",
   },
   label: {
@@ -283,7 +299,7 @@ const styles = StyleSheet.create({
   marginTop: {
     marginTop: 10,
   },
-  nameInput: {
+  input: {
     fontWeight: "bold",
     paddingLeft: 20,
     paddingRight: 20,
@@ -294,78 +310,41 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     color: "#1E1E1E",
   },
-  emailInput: {
-    fontWeight: "bold",
-    paddingLeft: 20,
-    paddingRight: 20,
-    height: 48,
-    borderColor: "#6F7072",
-    borderWidth: 1,
+  countryContainer: {
     borderRadius: 30,
-    backgroundColor: "transparent",
-    color: "#1E1E1E",
-  },
-  phoneInputWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderColor: "#6F7072",
     borderWidth: 1,
-    borderRadius: 30,
-    height: 48,
+    borderColor: "#6F7072",
+    overflow: "hidden",
     marginTop: 10,
   },
-  phoneNumberInput: {
-    flex: 1,
-    paddingLeft: 20,
-    paddingRight: 20,
-    color: "#1E1E1E",
-  },
-  passwordInput: {
+  countryCodeTextStyle: {
+    fontSize: 14,
     fontWeight: "bold",
-    paddingLeft: 20,
-    paddingRight: 20,
-    height: 48,
-    borderColor: "#6F7072",
-    borderWidth: 1,
-    borderRadius: 30,
+    letterSpacing: 0.5,
+  },
+  dropDownStyle: {
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     backgroundColor: "transparent",
-    color: "#1E1E1E",
+    overflow: "hidden",
+    marginRight: 3,
   },
-  focusedInput: {
-    borderColor: "#1E1E1E",
+  searchStyle: {
+    backgroundColor: "transparent",
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
   },
-  footerContainer: {
-    justifyContent: "center",
-    width: "85%",
-    alignSelf: "center",
-    marginTop: "40%",
+  countryCodeContainer: {
+    borderRadius: 30,
+    height: 44,
+    margin: 5,
+    backgroundColor: "transparent",
+    borderColor: "#7d7c7b",
+    borderWidth: 1,
   },
-  loginLink: {
-    marginBottom: 10,
-  },
-  loginText: {
-    color: "#1E1E1E",
-    fontSize: 16,
-  },
-  loginLinkText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  signUpButton: {
-    backgroundColor: "#3AA2ED",
-    height: 48,
-    justifyContent: "center",
-    borderRadius: 33,
-    marginTop: "4%",
-    width: "85%",
-    alignItems: "center",
-    alignSelf: "center",
-  },
-  buttonText: {
-    fontWeight: "medium",
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 16,
-    fontFamily: "GolosText",
+  phoneStyle: {
+    backgroundColor: "transparent",
+    borderRadius: 5,
+    borderWidth: null,
   },
 });
