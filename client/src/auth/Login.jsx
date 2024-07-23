@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { useFonts } from "expo-font";
+import Toast from "react-native-toast-message";
 
 export default function Login() {
   const navigation = useNavigation();
@@ -46,33 +47,40 @@ export default function Login() {
           "Content-Type": "application/json",
         },
       };
+
       const response = await axios.post(
         "http://192.168.10.10:8080/api/v1/auth/login",
         requestData,
         config
       );
+
       if (response.data.success) {
-        ToastAndroid.showWithGravity(
-          "Login Successful",
-          ToastAndroid.SHORT,
-          ToastAndroid.TOP
-        );
-        navigation.navigate("Home");
+        Toast.show({
+          type: "success",
+          text1: "Login Successful",
+          visibilityTime: 500,
+          onHide: () => {
+            navigation.navigate("Home");
+            // Clear input fields
+            setEmailOrPhone("");
+            setPassword("");
+          },
+        });
       }
     } catch (error) {
       if (error.response) {
         console.log("Error Response:", error.response);
-        ToastAndroid.showWithGravity(
-          error.response.data.message || "An error occurred",
-          ToastAndroid.SHORT,
-          ToastAndroid.TOP
-        );
+        Toast.show({
+          type: "error",
+          text1: "Login Failed",
+          text2: error.response.data.message || "An error occurred",
+        });
       } else {
-        ToastAndroid.showWithGravity(
-          "Network error, please try again",
-          ToastAndroid.SHORT,
-          ToastAndroid.TOP
-        );
+        Toast.show({
+          type: "error",
+          text1: "Network Error",
+          text2: "Please try again later",
+        });
       }
     }
   };
@@ -150,13 +158,7 @@ export default function Login() {
                 <Text style={[styles.welcomeHeading]}>Welcome</Text>
                 <Text style={styles.label}>Email or phone number</Text>
                 <TextInput
-                  style={[
-                    styles.emailInput,
-                    isEmailFocused && {
-                      borderColor: "#fff",
-                      backgroundColor: "#fff",
-                    },
-                  ]}
+                  style={[styles.emailInput]}
                   placeholder="Enter email or phone number"
                   placeholderTextColor="#4e4e4e"
                   selectionColor={"#000"}
@@ -171,13 +173,7 @@ export default function Login() {
                 <Text style={[styles.label, styles.marginTop]}>Password</Text>
                 <View style={styles.passwordContainer}>
                   <TextInput
-                    style={[
-                      styles.passwordInput,
-                      isPasswordFocused && {
-                        borderColor: "#fff",
-                        backgroundColor: "#fff",
-                      },
-                    ]}
+                    style={[styles.passwordInput]}
                     placeholder="Enter Password"
                     placeholderTextColor="#4e4e4e"
                     selectionColor={"#000"}
@@ -248,6 +244,7 @@ export default function Login() {
               </View>
             </View>
           </BlurView>
+          <Toast />
         </ImageBackground>
       </View>
     </KeyboardAvoidingView>
