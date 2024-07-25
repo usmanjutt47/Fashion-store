@@ -1,63 +1,39 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  Dimensions,
-} from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, FlatList, Image, Dimensions } from "react-native";
 import Animated, {
-  interpolate,
-  Extrapolate,
+  useAnimatedScrollHandler,
   useSharedValue,
   useAnimatedStyle,
+  interpolate,
+  Extrapolate,
 } from "react-native-reanimated";
 
 const SRC_WIDTH = Dimensions.get("window").width;
 const CARD_LENGTH = SRC_WIDTH * 0.8;
-const SPACING = SRC_WIDTH * 0.02;
-const SIDECARD_LENGTH = (SRC_WIDTH * 0.18) / 2;
+const SPACING = SRC_WIDTH * 0.0;
+const SIDECARD_LENGTH = (SRC_WIDTH * 0.05) / 2;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-interface itemProps {
+interface ItemProps {
   index: number;
-  scrollX: number;
+  scrollX: Animated.SharedValue<number>;
 }
 
-function Item({ index, scrollX }: itemProps) {
-  const size = useSharedValue(0.8);
+function Item({ index, scrollX }: ItemProps) {
+  const animatedStyle = useAnimatedStyle(() => {
+    const scale = interpolate(
+      scrollX.value,
+      [
+        (index - 1) * (CARD_LENGTH + SPACING),
+        index * (CARD_LENGTH + SPACING),
+        (index + 1) * (CARD_LENGTH + SPACING),
+      ],
+      [0.7, 1, 0.7],
+      Extrapolate.CLAMP
+    );
 
-  const inputRange = [
-    (index - 1) * CARD_LENGTH,
-    index * CARD_LENGTH,
-    (index + 1) * CARD_LENGTH,
-  ];
-
-  size.value = interpolate(
-    scrollX,
-    inputRange,
-    [0.7, 1, 0.7],
-    Extrapolate.CLAMP
-  );
-
-  const opacity = useSharedValue(1);
-  const opacityInputRange = [
-    (index - 1) * CARD_LENGTH,
-    index * CARD_LENGTH,
-    (index + 1) * CARD_LENGTH,
-  ];
-  opacity.value = interpolate(
-    scrollX,
-    opacityInputRange,
-    [0.7, 1, 0.7],
-    Extrapolate.CLAMP
-  );
-
-  const cardStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scaleY: size.value }],
-      opacity: opacity.value,
+      transform: [{ scale }],
     };
   });
 
@@ -65,10 +41,10 @@ function Item({ index, scrollX }: itemProps) {
     <Animated.View
       style={[
         styles.card,
-        cardStyle,
+        animatedStyle,
         {
-          marginLeft: index == 0 ? SIDECARD_LENGTH : SPACING,
-          marginRight: index == 2 ? SIDECARD_LENGTH : SPACING,
+          marginLeft: index === 0 ? SIDECARD_LENGTH : SPACING,
+          marginRight: index === DATA.length - 1 ? SIDECARD_LENGTH : SPACING,
         },
       ]}
     >
@@ -80,43 +56,43 @@ function Item({ index, scrollX }: itemProps) {
   );
 }
 
-export default function Carousel() {
-  const [scrollX, setScrollX] = useState(0);
+const DATA = [
+  {
+    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+    title: "First Item",
+  },
+  {
+    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+    title: "Second Item",
+  },
+  {
+    id: "58694a0f-3da1-471f-bd96-145571e29d72",
+    title: "Third Item",
+  },
+];
 
-  const DATA = [
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
+export default function Carousel() {
+  const scrollX = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    scrollX.value = event.contentOffset.x;
+  });
 
   return (
     <Animated.View>
       <AnimatedFlatList
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
-        decelerationRate={0.8}
-        snapToInterval={CARD_LENGTH + SPACING * 1.5}
-        disableIntervalMomentum={true}
-        disableScrollViewPanResponder={true}
-        snapToAlignment={"center"}
+        decelerationRate="fast"
+        snapToInterval={CARD_LENGTH + SPACING}
+        contentContainerStyle={{ paddingHorizontal: SIDECARD_LENGTH }}
         data={DATA}
-        horizontal={true}
+        horizontal
         renderItem={({ item, index }) => {
           return <Item index={index} scrollX={scrollX} />;
         }}
         keyExtractor={(item) => item.id}
-        onScroll={(event) => {
-          setScrollX(event.nativeEvent.contentOffset.x);
-        }}
+        onScroll={scrollHandler}
       />
     </Animated.View>
   );
@@ -125,7 +101,7 @@ export default function Carousel() {
 const styles = StyleSheet.create({
   card: {
     width: CARD_LENGTH,
-    height: 150,
+    height: "50%",
     overflow: "hidden",
     borderRadius: 15,
   },
