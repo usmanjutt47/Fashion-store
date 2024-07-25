@@ -49,7 +49,7 @@ export default function Login() {
       };
 
       const response = await axios.post(
-        "http://192.168.10.10:8080/api/v1/auth/login",
+        "http://192.168.10.8:8080/api/v1/auth/login",
         requestData,
         config
       );
