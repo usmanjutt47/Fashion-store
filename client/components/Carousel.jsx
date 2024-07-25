@@ -101,8 +101,8 @@ export default function Carousel() {
 const styles = StyleSheet.create({
   card: {
     width: CARD_LENGTH,
-    height: "50%",
+    height: "47.1%",
     overflow: "hidden",
-    borderRadius: 15,
+    borderRadius: 37,
   },
 });

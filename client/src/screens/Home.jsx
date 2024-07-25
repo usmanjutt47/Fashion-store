@@ -5,12 +5,20 @@ import {
   Image,
   StyleSheet,
   ScrollView,
-  Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
-import Carousel from "../../components/Carousel"; // Importing the Carousel component
+import Carousel from "../../components/Carousel";
+
+const buttonData = [
+  { key: "All", label: "All", width: 66 },
+  { key: "Hoodie", label: "Hoodie", width: 94 },
+  { key: "Sweater", label: "Sweater", width: 101 },
+  { key: "T-Shirt", label: "T-Shirt", width: 101 },
+  { key: "Pants", label: "Pants", width: 101 },
+];
 
 export default function Home() {
   const [loaded] = useFonts({
@@ -52,113 +60,32 @@ export default function Home() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollViewContent}
         >
-          <Pressable
-            onPress={() => handlePress("All")}
-            style={[
-              styles.pressableButton,
-              {
-                backgroundColor: selected === "All" ? "#000000" : "#EBF2F4",
-                width: 66,
-              },
-            ]}
-          >
-            <Text
+          {buttonData.map((button) => (
+            <TouchableOpacity
+              key={button.key}
+              onPress={() => handlePress(button.key)}
               style={[
-                styles.pressableText,
+                styles.pressableButton,
                 {
-                  color: selected === "All" ? "#FFFFFF" : "#000000",
+                  backgroundColor:
+                    selected === button.key ? "#000000" : "#EBF2F4",
+                  width: button.width,
                 },
+                button !== buttonData[0] && { marginHorizontal: 5 },
               ]}
             >
-              All
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => handlePress("Hoodie")}
-            style={[
-              styles.pressableButton,
-              {
-                backgroundColor: selected === "Hoodie" ? "#000000" : "#EBF2F4",
-                width: 94,
-              },
-              { marginHorizontal: 5 },
-            ]}
-          >
-            <Text
-              style={[
-                styles.pressableText,
-                {
-                  color: selected === "Hoodie" ? "#FFFFFF" : "#000000",
-                },
-              ]}
-            >
-              Hoodie
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => handlePress("Sweater")}
-            style={[
-              styles.pressableButton,
-              {
-                backgroundColor: selected === "Sweater" ? "#000000" : "#EBF2F4",
-                width: 101,
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.pressableText,
-                {
-                  color: selected === "Sweater" ? "#FFFFFF" : "#000000",
-                },
-              ]}
-            >
-              Sweater
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => handlePress("T-Shirt")}
-            style={[
-              styles.pressableButton,
-              {
-                backgroundColor: selected === "T-Shirt" ? "#000000" : "#EBF2F4",
-                width: 101,
-              },
-              { marginHorizontal: 5 },
-            ]}
-          >
-            <Text
-              style={[
-                styles.pressableText,
-                {
-                  color: selected === "T-Shirt" ? "#FFFFFF" : "#000000",
-                },
-              ]}
-            >
-              T-Shirt
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => handlePress("Pants")}
-            style={[
-              styles.pressableButton,
-              {
-                backgroundColor: selected === "Pants" ? "#000000" : "#EBF2F4",
-                width: 101,
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.pressableText,
-                {
-                  color: selected === "Pants" ? "#FFFFFF" : "#000000",
-                },
-              ]}
-            >
-              Pants
-            </Text>
-          </Pressable>
+              <Text
+                style={[
+                  styles.pressableText,
+                  {
+                    color: selected === button.key ? "#FFFFFF" : "#000000",
+                  },
+                ]}
+              >
+                {button.label}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </ScrollView>
       </View>
       <View style={styles.carouselContainer}>
@@ -178,9 +105,9 @@ const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
-    height: "7.33%",
+    height: 50,
     justifyContent: "center",
-    marginTop: "5%",
+    marginTop: 20,
   },
   headerContent: {
     flexDirection: "row",
@@ -191,7 +118,7 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    borderRadius: 100,
+    borderRadius: 25,
     overflow: "hidden",
   },
   title: {
@@ -203,18 +130,18 @@ const styles = StyleSheet.create({
   },
   icon: {
     alignSelf: "center",
-    marginRight: "5%",
+    marginRight: 20,
   },
   collectionTitle: {
     fontWeight: "bold",
     fontSize: 24,
     fontFamily: "GolosText",
-    marginTop: "5%",
+    marginTop: 20,
   },
   scrollViewContainer: {
     height: 60,
     width: "100%",
-    marginTop: "3%",
+    marginTop: 15,
   },
   scrollViewContent: {
     flexDirection: "row",
@@ -230,11 +157,11 @@ const styles = StyleSheet.create({
   },
   pressableText: {
     fontFamily: "GolosText",
-    fontWeight: "medium",
+    fontWeight: "500",
     fontSize: 14,
   },
   carouselContainer: {
-    marginTop: "5%",
+    marginTop: 20,
     alignItems: "center",
   },
 });
