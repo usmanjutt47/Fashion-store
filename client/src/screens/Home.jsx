@@ -89,7 +89,9 @@ export default function Home() {
         </ScrollView>
       </View>
       <View style={styles.carouselContainer}>
-        <Carousel />
+        <View>
+          <Carousel />
+        </View>
       </View>
     </View>
   );
