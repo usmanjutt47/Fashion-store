@@ -41,7 +41,7 @@ export default function SignUp() {
 
     try {
       const response = await axios.post(
-        "http://192.168.10.10:8080/api/v1/auth/register",
+        "http://192.168.10.8:8080/api/v1/auth/register",
         {
           name,
           email,
