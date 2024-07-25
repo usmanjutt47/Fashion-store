@@ -161,8 +161,9 @@ export default function Home() {
           </Pressable>
         </ScrollView>
       </View>
-      {/* Replace the placeholder View with the Carousel component */}
-      <Carousel />
+      <View style={styles.carouselContainer}>
+        <Carousel />
+      </View>
     </View>
   );
 }
@@ -172,6 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingLeft: "5%",
+    paddingRight: "5%",
     paddingTop: "5%",
   },
   header: {
@@ -230,5 +232,9 @@ const styles = StyleSheet.create({
     fontFamily: "GolosText",
     fontWeight: "medium",
     fontSize: 14,
+  },
+  carouselContainer: {
+    marginTop: "5%",
+    alignItems: "center",
   },
 });
