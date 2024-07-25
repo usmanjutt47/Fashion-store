@@ -9,9 +9,9 @@ import Animated, {
 } from "react-native-reanimated";
 
 const SRC_WIDTH = Dimensions.get("window").width;
-const CARD_LENGTH = SRC_WIDTH * 0.8;
+const CARD_LENGTH = SRC_WIDTH * 0.6;
 const SPACING = SRC_WIDTH * 0.0;
-const SIDECARD_LENGTH = (SRC_WIDTH * 0.05) / 2;
+const SIDECARD_LENGTH = (SRC_WIDTH * 0.07) / 1;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 interface ItemProps {
@@ -79,7 +79,7 @@ export default function Carousel() {
   });
 
   return (
-    <Animated.View>
+    <Animated.View style={styles.container}>
       <AnimatedFlatList
         scrollEventThrottle={16}
         showsHorizontalScrollIndicator={false}
@@ -99,6 +99,9 @@ export default function Carousel() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   card: {
     width: CARD_LENGTH,
     height: "47.1%",
