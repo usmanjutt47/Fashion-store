@@ -10,6 +10,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import { AntDesign } from "@expo/vector-icons";
+import Carousel from "../../components/Carousel"; // Importing the Carousel component
 
 export default function Home() {
   const [loaded] = useFonts({
@@ -80,6 +81,7 @@ export default function Home() {
                 backgroundColor: selected === "Hoodie" ? "#000000" : "#EBF2F4",
                 width: 94,
               },
+              { marginHorizontal: 5 },
             ]}
           >
             <Text
@@ -122,6 +124,7 @@ export default function Home() {
                 backgroundColor: selected === "T-Shirt" ? "#000000" : "#EBF2F4",
                 width: 101,
               },
+              { marginHorizontal: 5 },
             ]}
           >
             <Text
@@ -135,8 +138,31 @@ export default function Home() {
               T-Shirt
             </Text>
           </Pressable>
+          <Pressable
+            onPress={() => handlePress("Pants")}
+            style={[
+              styles.pressableButton,
+              {
+                backgroundColor: selected === "Pants" ? "#000000" : "#EBF2F4",
+                width: 101,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.pressableText,
+                {
+                  color: selected === "Pants" ? "#FFFFFF" : "#000000",
+                },
+              ]}
+            >
+              Pants
+            </Text>
+          </Pressable>
         </ScrollView>
       </View>
+      {/* Replace the placeholder View with the Carousel component */}
+      <Carousel />
     </View>
   );
 }
@@ -199,7 +225,6 @@ const styles = StyleSheet.create({
     borderRadius: 29,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 5,
   },
   pressableText: {
     fontFamily: "GolosText",
