@@ -89,9 +89,98 @@ export default function Home() {
         </ScrollView>
       </View>
       <View style={styles.carouselContainer}>
-        <View>
+        <ScrollView>
           <Carousel />
-        </View>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+          <Text>kjslkdfjlksdfkj</Text>
+        </ScrollView>
       </View>
     </View>
   );
@@ -164,6 +253,7 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     marginTop: 20,
-    alignItems: "center",
+
+    backgroundColor: "red",
   },
 });
