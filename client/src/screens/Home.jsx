@@ -330,6 +330,9 @@ export default function Home() {
               </View>
             </Pressable>
           </View>
+          <View style={styles.carouselContainer}>
+            <Carousel />
+          </View>
         </View>
       </ScrollView>
     </View>
