@@ -6,11 +6,13 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Pressable,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Carousel from "../../components/Carousel";
+import { BlurView } from "expo-blur";
 
 const buttonData = [
   { key: "All", label: "All", width: 66 },
@@ -28,7 +30,7 @@ export default function Home() {
   const [selected, setSelected] = useState("All");
 
   if (!loaded) {
-    return null;
+    return <View style={styles.container} />;
   }
 
   const handlePress = (item) => {
@@ -53,13 +55,13 @@ export default function Home() {
           />
         </View>
       </View>
-      <Text style={styles.collectionTitle}>Collection</Text>
-      <View style={styles.scrollViewContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollViewContent}
-        >
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        <Text style={styles.collectionTitle}>Collection</Text>
+        <View style={styles.buttonContainer}>
           {buttonData.map((button) => (
             <TouchableOpacity
               key={button.key}
@@ -86,33 +88,488 @@ export default function Home() {
               </Text>
             </TouchableOpacity>
           ))}
-        </ScrollView>
-      </View>
-      <ScrollView
-        contentContainerStyle={{
-          paddingLeft: "5%",
-          paddingRight: "5%",
-          marginTop: "5%",
-        }}
-      >
-        <View>
+        </View>
+
+        <View style={styles.carouselContainer}>
           <Carousel />
         </View>
-        <View
-          style={{
-            width: "100%",
-            marginTop: "10%",
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontFamily: "GolosText",
-              fontSize: 24,
-            }}
-          >
-            Elegance T-shirt
-          </Text>
+
+        <View style={styles.scrollInnerContainer}>
+          <Text style={styles.tShirtText}>Elegance T-shirt</Text>
+          <View style={styles.imageContainer}>
+            <Pressable
+              style={{
+                width: "48.5%",
+                height: "100%",
+                borderRadius: 30,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/category1.png")}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
+                <BlurView
+                  style={{
+                    width: 68,
+                    height: 44,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        letterSpacing: 0.4,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        fontFamily: "GolosText",
+                        color: "#fff",
+                      }}
+                    >
+                      $299
+                    </Text>
+                  </Pressable>
+                </BlurView>
+                <BlurView
+                  style={{
+                    width: 41,
+                    height: 41,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <AntDesign
+                      name="heart"
+                      color="#fff"
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </Pressable>
+                </BlurView>
+              </View>
+            </Pressable>
+            <Pressable
+              style={{
+                width: "48.5%",
+                height: "100%",
+                borderRadius: 30,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/category2.png")}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
+                <BlurView
+                  style={{
+                    width: 68,
+                    height: 44,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        letterSpacing: 0.4,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        fontFamily: "GolosText",
+                        color: "#fff",
+                      }}
+                    >
+                      $299
+                    </Text>
+                  </Pressable>
+                </BlurView>
+                <BlurView
+                  style={{
+                    width: 41,
+                    height: 41,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <AntDesign
+                      name="heart"
+                      color="#fff"
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </Pressable>
+                </BlurView>
+              </View>
+            </Pressable>
+          </View>
+          <View style={styles.imageContainer}>
+            <Pressable
+              style={{
+                width: "48.5%",
+                height: "100%",
+                borderRadius: 30,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/category3.png")}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
+                <BlurView
+                  style={{
+                    width: 68,
+                    height: 44,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        letterSpacing: 0.4,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        fontFamily: "GolosText",
+                        color: "#fff",
+                      }}
+                    >
+                      $299
+                    </Text>
+                  </Pressable>
+                </BlurView>
+                <BlurView
+                  style={{
+                    width: 41,
+                    height: 41,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <AntDesign
+                      name="heart"
+                      color="#fff"
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </Pressable>
+                </BlurView>
+              </View>
+            </Pressable>
+            <Pressable
+              style={{
+                width: "48.5%",
+                height: "100%",
+                borderRadius: 30,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/category4.png")}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
+                <BlurView
+                  style={{
+                    width: 68,
+                    height: 44,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        letterSpacing: 0.4,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        fontFamily: "GolosText",
+                        color: "#fff",
+                      }}
+                    >
+                      $299
+                    </Text>
+                  </Pressable>
+                </BlurView>
+                <BlurView
+                  style={{
+                    width: 41,
+                    height: 41,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <AntDesign
+                      name="heart"
+                      color="#fff"
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </Pressable>
+                </BlurView>
+              </View>
+            </Pressable>
+          </View>
+          <View style={styles.imageContainer}>
+            <Pressable
+              style={{
+                width: "48.5%",
+                height: "100%",
+                borderRadius: 30,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/category5.png")}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
+                <BlurView
+                  style={{
+                    width: 68,
+                    height: 44,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        letterSpacing: 0.4,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        fontFamily: "GolosText",
+                        color: "#fff",
+                      }}
+                    >
+                      $299
+                    </Text>
+                  </Pressable>
+                </BlurView>
+                <BlurView
+                  style={{
+                    width: 41,
+                    height: 41,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <AntDesign
+                      name="heart"
+                      color="#fff"
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </Pressable>
+                </BlurView>
+              </View>
+            </Pressable>
+            <Pressable
+              style={{
+                width: "48.5%",
+                height: "100%",
+                borderRadius: 30,
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/Card.png")}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: "5%",
+                  left: 0,
+                  right: 0,
+                  justifyContent: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingLeft: "10%",
+                  paddingRight: "10%",
+                }}
+              >
+                <BlurView
+                  style={{
+                    width: 68,
+                    height: 44,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <Text
+                      style={{
+                        alignSelf: "center",
+                        letterSpacing: 0.4,
+                        fontSize: 16,
+                        fontWeight: "bold",
+                        fontFamily: "GolosText",
+                        color: "#fff",
+                      }}
+                    >
+                      $299
+                    </Text>
+                  </Pressable>
+                </BlurView>
+                <BlurView
+                  style={{
+                    width: 41,
+                    height: 41,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                    overflow: "hidden",
+                  }}
+                  intensity={50}
+                  tint="default"
+                  experimentalBlurMethod="dimezisBlurView"
+                >
+                  <Pressable>
+                    <AntDesign
+                      name="heart"
+                      color="#fff"
+                      size={20}
+                      style={{ alignSelf: "center" }}
+                    />
+                  </Pressable>
+                </BlurView>
+              </View>
+            </Pressable>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -161,20 +618,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: "GolosText",
     marginTop: 20,
-    paddingLeft: "5%",
-    paddingRight: "5%",
   },
-  scrollViewContainer: {
+  buttonContainer: {
     height: 60,
     width: "100%",
-    marginTop: 15,
-    paddingLeft: "5%",
-  },
-  scrollViewContent: {
+    marginTop: "3%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: "100%",
   },
   pressableButton: {
     height: 51,
@@ -189,8 +640,31 @@ const styles = StyleSheet.create({
   },
   carouselContainer: {
     alignItems: "center",
-    backgroundColor: "red",
+    marginTop: "5%",
+  },
+  scrollContainer: {
     paddingLeft: "5%",
     paddingRight: "5%",
+  },
+  scrollInnerContainer: {
+    width: "100%",
+    marginTop: "10%",
+  },
+  tShirtText: {
+    fontWeight: "bold",
+    fontFamily: "GolosText",
+    fontSize: 24,
+  },
+  imageContainer: {
+    flexDirection: "row",
+    width: "100%",
+    height: 264,
+    gap: 10,
+    marginTop: "5%",
+  },
+  imagePressable: {
+    backgroundColor: "red",
+    height: "100%",
+    width: "50%",
   },
 });
