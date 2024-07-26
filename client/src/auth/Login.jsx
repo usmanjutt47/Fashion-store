@@ -49,7 +49,7 @@ export default function Login() {
       };
 
       const response = await axios.post(
-        "http://192.168.10.8:8080/api/v1/auth/login",
+        "http://192.168.100.6:8080/api/v1/auth/login",
         requestData,
         config
       );
@@ -60,7 +60,7 @@ export default function Login() {
           text1: "Login Successful",
           visibilityTime: 500,
           onHide: () => {
-            navigation.navigate("Home");
+            navigation.navigate("HomeStack");
             // Clear input fields
             setEmailOrPhone("");
             setPassword("");
