@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import Carousel from "../../components/Carousel";
 import { BlurView } from "expo-blur";
 
@@ -97,59 +97,24 @@ export default function Home() {
         <View style={styles.scrollInnerContainer}>
           <Text style={styles.tShirtText}>Elegance T-shirt</Text>
           <View style={styles.imageContainer}>
-            <Pressable
-              style={{
-                width: "48.5%",
-                height: "100%",
-                borderRadius: 30,
-                overflow: "hidden",
-              }}
-            >
+            <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category1.png")}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
+                style={styles.itemImage}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>Flex Shirt Cream</Text>
+                <Text style={{ color: "#b5c5c7" }}>T-shirt</Text>
+              </View>
+              <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={{
-                    width: 68,
-                    height: 44,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurContainer}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
                 >
                   <Pressable>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        letterSpacing: 0.4,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        fontFamily: "GolosText",
-                        color: "#fff",
-                      }}
-                    >
-                      $299
-                    </Text>
+                    <Text style={styles.priceText}>$299</Text>
                   </Pressable>
                 </BlurView>
                 <BlurView
@@ -175,69 +140,28 @@ export default function Home() {
                 </BlurView>
               </View>
             </Pressable>
-            <Pressable
-              style={{
-                width: "48.5%",
-                height: "100%",
-                borderRadius: 30,
-                overflow: "hidden",
-              }}
-            >
+            <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category2.png")}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
+                style={styles.itemImage}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>Flex Shirt Cream</Text>
+                <Text style={{ color: "#b5c5c7" }}>T-shirt</Text>
+              </View>
+              <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={{
-                    width: 68,
-                    height: 44,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurContainer}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
                 >
                   <Pressable>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        letterSpacing: 0.4,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        fontFamily: "GolosText",
-                        color: "#fff",
-                      }}
-                    >
-                      $299
-                    </Text>
+                    <Text style={styles.priceText}>$299</Text>
                   </Pressable>
                 </BlurView>
                 <BlurView
-                  style={{
-                    width: 41,
-                    height: 41,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurView}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
@@ -255,69 +179,28 @@ export default function Home() {
             </Pressable>
           </View>
           <View style={styles.imageContainer}>
-            <Pressable
-              style={{
-                width: "48.5%",
-                height: "100%",
-                borderRadius: 30,
-                overflow: "hidden",
-              }}
-            >
+            <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category3.png")}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
+                style={styles.itemImage}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>Flex Shirt Cream</Text>
+                <Text style={{ color: "#b5c5c7" }}>T-shirt</Text>
+              </View>
+              <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={{
-                    width: 68,
-                    height: 44,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurContainer}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
                 >
                   <Pressable>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        letterSpacing: 0.4,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        fontFamily: "GolosText",
-                        color: "#fff",
-                      }}
-                    >
-                      $299
-                    </Text>
+                    <Text style={styles.priceText}>$299</Text>
                   </Pressable>
                 </BlurView>
                 <BlurView
-                  style={{
-                    width: 41,
-                    height: 41,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurView}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
@@ -333,69 +216,28 @@ export default function Home() {
                 </BlurView>
               </View>
             </Pressable>
-            <Pressable
-              style={{
-                width: "48.5%",
-                height: "100%",
-                borderRadius: 30,
-                overflow: "hidden",
-              }}
-            >
+            <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category4.png")}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
+                style={styles.itemImage}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>Flex Shirt Cream</Text>
+                <Text style={{ color: "#b5c5c7" }}>T-shirt</Text>
+              </View>
+              <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={{
-                    width: 68,
-                    height: 44,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurContainer}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
                 >
                   <Pressable>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        letterSpacing: 0.4,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        fontFamily: "GolosText",
-                        color: "#fff",
-                      }}
-                    >
-                      $299
-                    </Text>
+                    <Text style={styles.priceText}>$299</Text>
                   </Pressable>
                 </BlurView>
                 <BlurView
-                  style={{
-                    width: 41,
-                    height: 41,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurView}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
@@ -413,69 +255,28 @@ export default function Home() {
             </Pressable>
           </View>
           <View style={styles.imageContainer}>
-            <Pressable
-              style={{
-                width: "48.5%",
-                height: "100%",
-                borderRadius: 30,
-                overflow: "hidden",
-              }}
-            >
+            <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category5.png")}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
+                style={styles.itemImage}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>Flex Shirt Cream</Text>
+                <Text style={{ color: "#b5c5c7" }}>T-shirt</Text>
+              </View>
+              <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={{
-                    width: 68,
-                    height: 44,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurContainer}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
                 >
                   <Pressable>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        letterSpacing: 0.4,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        fontFamily: "GolosText",
-                        color: "#fff",
-                      }}
-                    >
-                      $299
-                    </Text>
+                    <Text style={styles.priceText}>$299</Text>
                   </Pressable>
                 </BlurView>
                 <BlurView
-                  style={{
-                    width: 41,
-                    height: 41,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurView}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
@@ -491,69 +292,28 @@ export default function Home() {
                 </BlurView>
               </View>
             </Pressable>
-            <Pressable
-              style={{
-                width: "48.5%",
-                height: "100%",
-                borderRadius: 30,
-                overflow: "hidden",
-              }}
-            >
+            <Pressable style={styles.itemContainer}>
               <Image
-                source={require("../../assets/images/Card.png")}
-                style={{
-                  height: "100%",
-                  width: "100%",
-                }}
+                source={require("../../assets/images/category6.png")}
+                style={styles.itemImage}
               />
-              <View
-                style={{
-                  position: "absolute",
-                  bottom: "5%",
-                  left: 0,
-                  right: 0,
-                  justifyContent: "center",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  paddingLeft: "10%",
-                  paddingRight: "10%",
-                }}
-              >
+              <View style={styles.itemTextContainer}>
+                <Text style={styles.itemText}>Flex Shirt Cream</Text>
+                <Text style={{ color: "#b5c5c7" }}>T-shirt</Text>
+              </View>
+              <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={{
-                    width: 68,
-                    height: 44,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurView}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
                 >
                   <Pressable>
-                    <Text
-                      style={{
-                        alignSelf: "center",
-                        letterSpacing: 0.4,
-                        fontSize: 16,
-                        fontWeight: "bold",
-                        fontFamily: "GolosText",
-                        color: "#fff",
-                      }}
-                    >
-                      $299
-                    </Text>
+                    <Text style={styles.priceText}>$299</Text>
                   </Pressable>
                 </BlurView>
                 <BlurView
-                  style={{
-                    width: 41,
-                    height: 41,
-                    justifyContent: "center",
-                    borderRadius: 36,
-                    overflow: "hidden",
-                  }}
+                  style={styles.blurView}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
@@ -666,5 +426,60 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     height: "100%",
     width: "50%",
+  },
+  itemContainer: {
+    width: "48.5%",
+    height: "100%",
+    borderRadius: 30,
+    overflow: "hidden",
+  },
+  itemImage: {
+    height: "100%",
+    width: "100%",
+  },
+  itemTextContainer: {
+    position: "absolute",
+    width: "100%",
+    marginTop: "10%",
+    paddingLeft: "10%",
+    paddingRight: "10%",
+  },
+  itemText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  itemBlurContainer: {
+    position: "absolute",
+    bottom: "5%",
+    left: 0,
+    right: 0,
+    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: "10%",
+    paddingRight: "10%",
+  },
+  blurContainer: {
+    width: 68,
+    height: 44,
+    justifyContent: "center",
+    borderRadius: 36,
+    overflow: "hidden",
+  },
+  priceText: {
+    alignSelf: "center",
+    letterSpacing: 0.4,
+    fontSize: 16,
+    fontWeight: "bold",
+    fontFamily: "GolosText",
+    color: "#fff",
+  },
+  blurView: {
+    width: 41,
+    height: 41,
+    justifyContent: "center",
+    borderRadius: 36,
+    overflow: "hidden",
   },
 });
