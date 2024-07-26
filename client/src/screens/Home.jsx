@@ -294,7 +294,7 @@ export default function Home() {
             </Pressable>
             <Pressable style={styles.itemContainer}>
               <Image
-                source={require("../../assets/images/category6.png")}
+                source={require("../../assets/images/Card.png")}
                 style={styles.itemImage}
               />
               <View style={styles.itemTextContainer}>
@@ -330,7 +330,7 @@ export default function Home() {
               </View>
             </Pressable>
           </View>
-          <View style={styles.carouselContainer}>
+          <View style={[styles.carouselContainer, { marginBottom: "5%" }]}>
             <Carousel />
           </View>
         </View>
