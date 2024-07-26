@@ -88,100 +88,33 @@ export default function Home() {
           ))}
         </ScrollView>
       </View>
-      <View style={styles.carouselContainer}>
-        <ScrollView>
+      <ScrollView
+        contentContainerStyle={{
+          paddingLeft: "5%",
+          paddingRight: "5%",
+          marginTop: "5%",
+        }}
+      >
+        <View>
           <Carousel />
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-          <Text>kjslkdfjlksdfkj</Text>
-        </ScrollView>
-      </View>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            marginTop: "10%",
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontFamily: "GolosText",
+              fontSize: 24,
+            }}
+          >
+            Elegance T-shirt
+          </Text>
+        </View>
+      </ScrollView>
     </View>
   );
 }
@@ -190,8 +123,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingLeft: "5%",
-    paddingRight: "5%",
     paddingTop: "5%",
   },
   header: {
@@ -199,6 +130,8 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: "center",
     marginTop: 20,
+    paddingLeft: "5%",
+    paddingRight: "5%",
   },
   headerContent: {
     flexDirection: "row",
@@ -228,11 +161,14 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: "GolosText",
     marginTop: 20,
+    paddingLeft: "5%",
+    paddingRight: "5%",
   },
   scrollViewContainer: {
     height: 60,
     width: "100%",
     marginTop: 15,
+    paddingLeft: "5%",
   },
   scrollViewContent: {
     flexDirection: "row",
@@ -252,8 +188,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   carouselContainer: {
-    marginTop: 20,
-
+    alignItems: "center",
     backgroundColor: "red",
+    paddingLeft: "5%",
+    paddingRight: "5%",
   },
 });
