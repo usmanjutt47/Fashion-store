@@ -63,64 +63,27 @@ function Item({ index, scrollX, item }: ItemProps) {
       <Image source={item.image} style={styles.image} />
       <View style={styles.overlay}>
         <View>
-          <Text style={[styles.text, { color: "#fff", fontWeight: "bold" }]}>
-            {item.title}
-          </Text>
+          <Text style={[styles.text, styles.titleStyle]}>{item.title}</Text>
           {item.price && (
-            <Text
-              style={[styles.text, { color: "#b5c5c7", fontWeight: "medium" }]}
-            >
+            <Text style={[styles.text, styles.categoryStyle]}>
               {item.category}
             </Text>
           )}
         </View>
-        <View style={{ flexDirection: "row" }}>
-          <BlurView
-            style={{
-              width: 41,
-              height: 41,
-              justifyContent: "center",
-              borderRadius: 26,
-              overflow: "hidden",
-              borderWidth: 1,
-              borderColor: "#b5c5c7",
-            }}
-            intensity={100}
-          >
+        <View style={styles.blurContainer}>
+          <BlurView style={styles.blurViewStyle} intensity={100}>
             <Pressable>
               <AntDesign
                 name="heart"
                 color="#fff"
                 size={20}
-                style={{ alignSelf: "center" }}
+                style={styles.icon}
               />
             </Pressable>
           </BlurView>
-          <BlurView
-            style={{
-              width: 68,
-              height: 41,
-              justifyContent: "center",
-              borderRadius: 26,
-              overflow: "hidden",
-              marginLeft: "5%",
-              borderWidth: 1,
-              borderColor: "#b5c5c7",
-            }}
-            intensity={100}
-          >
+          <BlurView style={styles.blurViewSecondContainer} intensity={100}>
             <Pressable>
-              <Text
-                style={{
-                  letterSpacing: 0.5,
-                  fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
-                  textAlign: "center",
-                }}
-              >
-                {item.price}
-              </Text>
+              <Text style={styles.priceText}>{item.price}</Text>
             </Pressable>
           </BlurView>
         </View>
@@ -210,5 +173,45 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 18,
+  },
+  titleStyle: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  categoryStyle: {
+    color: "#b5c5c7",
+    fontWeight: "medium",
+  },
+  blurContainer: {
+    flexDirection: "row",
+  },
+  blurViewStyle: {
+    width: 41,
+    height: 41,
+    justifyContent: "center",
+    borderRadius: 26,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#b5c5c7",
+  },
+  icon: {
+    alignSelf: "center",
+  },
+  blurViewSecondContainer: {
+    width: 68,
+    height: 41,
+    justifyContent: "center",
+    borderRadius: 26,
+    overflow: "hidden",
+    marginLeft: "5%",
+    borderWidth: 1,
+    borderColor: "#b5c5c7",
+  },
+  priceText: {
+    letterSpacing: 0.5,
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
   },
 });
