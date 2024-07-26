@@ -96,7 +96,7 @@ export default function Home() {
 
         <View style={styles.scrollInnerContainer}>
           <Text style={styles.tShirtText}>Elegance T-shirt</Text>
-          <View style={styles.imageContainer}>
+          <View style={[styles.imageContainer]}>
             <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category1.png")}
@@ -254,7 +254,7 @@ export default function Home() {
               </View>
             </Pressable>
           </View>
-          <View style={styles.imageContainer}>
+          <View style={[styles.imageContainer, { marginBottom: "5%" }]}>
             <Pressable style={styles.itemContainer}>
               <Image
                 source={require("../../assets/images/category5.png")}
