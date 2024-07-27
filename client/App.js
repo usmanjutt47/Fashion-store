@@ -19,9 +19,10 @@ const Tab = createBottomTabNavigator();
 
 function MainStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}initialRouteName="HomeStack">
+    <Stack.Navigator screenOptions={{ headerShown: false }}initialRouteName="OnBoarding">
       <Stack.Screen name="Auth" component={AuthOrMainScreen} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
+      <Stack.Screen name="OnBoarding" component={OnBoarding} />
     </Stack.Navigator>
   );
 }
