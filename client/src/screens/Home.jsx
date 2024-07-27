@@ -312,7 +312,7 @@ export default function Home() {
               </View>
               <View style={styles.itemBlurContainer}>
                 <BlurView
-                  style={styles.blurView}
+                  style={styles.blurContainer}
                   intensity={50}
                   tint="default"
                   experimentalBlurMethod="dimezisBlurView"
