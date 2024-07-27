@@ -32,20 +32,34 @@ export default function SignUp() {
   const [phone, setPhone] = useState("");
 
   const handleRegister = async () => {
+    // Combine country code and phone number if necessary
+    const fullPhoneNumber = `${selected}${phone}`;
+
+    // Validation checks
+    if (!name || !email || !fullPhoneNumber || !password) {
+      Toast.show({
+        type: "error",
+        text1: "Validation Failed",
+        text2: "Please fill in all fields.",
+      });
+      return;
+    }
+
+    // Log data to verify
     console.log({
       name,
       email,
-      phone: phoneNumber,
+      phone: fullPhoneNumber,
       password,
     });
 
     try {
       const response = await axios.post(
-        "http://192.168.10.8:8080/api/v1/auth/register",
+        "http://192.168.100.175:8080/api/v1/auth/register",
         {
           name,
           email,
-          phone: phoneNumber,
+          phone: fullPhoneNumber, // Sending combined phone number
           password,
         }
       );
