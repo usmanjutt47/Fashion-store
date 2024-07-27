@@ -32,10 +32,8 @@ export default function SignUp() {
   const [phone, setPhone] = useState("");
 
   const handleRegister = async () => {
-    // Combine country code and phone number if necessary
     const fullPhoneNumber = `${selected}${phone}`;
 
-    // Validation checks
     if (!name || !email || !fullPhoneNumber || !password) {
       Toast.show({
         type: "error",
@@ -45,7 +43,6 @@ export default function SignUp() {
       return;
     }
 
-    // Log data to verify
     console.log({
       name,
       email,
@@ -59,7 +56,7 @@ export default function SignUp() {
         {
           name,
           email,
-          phone: fullPhoneNumber, // Sending combined phone number
+          phone: fullPhoneNumber,
           password,
         }
       );
@@ -74,7 +71,6 @@ export default function SignUp() {
             navigation.navigate("Login");
           },
         });
-        // Clear input fields
         setName("");
         setEmail("");
         setPhoneNumber("");
