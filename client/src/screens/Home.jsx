@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Pressable,
+  FlatList,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
@@ -30,12 +31,40 @@ export default function Home() {
   const [selected, setSelected] = useState("All");
 
   if (!loaded) {
-    return <View style={styles.container} />;
+    return null;
   }
 
   const handlePress = (item) => {
     setSelected(item);
   };
+
+  const data = ["All", "Hoodie", "Sweater", "T-Shirt", "Pants"];
+
+  // Render function for FlatList
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => handlePress(item)}
+      style={[
+        styles.pressableButton,
+        {
+          backgroundColor: selected === item ? "#000000" : "#EBF2F4",
+          width: item === "All" ? 66 : 94,
+          marginHorizontal: 5,
+        },
+      ]}
+    >
+      <Text
+        style={[
+          styles.pressableText,
+          {
+            color: selected === item ? "#FFFFFF" : "#000000",
+          },
+        ]}
+      >
+        {item}
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={styles.container}>
@@ -61,34 +90,14 @@ export default function Home() {
         showsHorizontalScrollIndicator={false}
       >
         <Text style={styles.collectionTitle}>Collection</Text>
-        <View style={styles.buttonContainer}>
-          {buttonData.map((button) => (
-            <TouchableOpacity
-              key={button.key}
-              onPress={() => handlePress(button.key)}
-              style={[
-                styles.pressableButton,
-                {
-                  backgroundColor:
-                    selected === button.key ? "#000000" : "#EBF2F4",
-                  width: button.width,
-                },
-                button !== buttonData[0] && { marginHorizontal: 5 },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.pressableText,
-                  {
-                    color: selected === button.key ? "#FFFFFF" : "#000000",
-                  },
-                ]}
-              >
-                {button.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.buttonContainer}
+        />
 
         <View style={styles.carouselContainer}>
           <Carousel />
@@ -384,7 +393,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     height: 60,
-    width: "100%",
     marginTop: "3%",
     flexDirection: "row",
     alignItems: "center",
