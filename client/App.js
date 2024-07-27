@@ -10,19 +10,22 @@ import Login from "./src/auth/Login";
 import SignUp from "./src/auth/SignUp";
 import OnBoarding from "./src/splash/OnBoarding";
 import Home from "./src/screens/Home";
-import ForgotPassword from "./src/screens/ForgotPassword";
 import Cart from "./src/TabsScreens/Cart";
 import Profile from "./src/TabsScreens/Profile";
+import ProductDetail from "./src/screens/ProductDetail";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MainStack() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}initialRouteName="OnBoarding">
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="HomeStack"
+    >
       <Stack.Screen name="Auth" component={AuthOrMainScreen} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
-      <Stack.Screen name="OnBoarding" component={OnBoarding} />
+      <Stack.Screen name="ProductDetails" component={ProductDetail} />
     </Stack.Navigator>
   );
 }
