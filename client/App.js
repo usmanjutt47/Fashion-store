@@ -21,7 +21,7 @@ function MainStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="HomeStack"
+      initialRouteName="OnBoarding"
     >
       <Stack.Screen name="Auth" component={AuthOrMainScreen} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
