@@ -5,7 +5,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
-
 import Login from "./src/auth/Login";
 import SignUp from "./src/auth/SignUp";
 import OnBoarding from "./src/splash/OnBoarding";
