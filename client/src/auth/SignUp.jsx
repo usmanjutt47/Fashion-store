@@ -199,17 +199,17 @@ export default function SignUp() {
                 <StatusBar style="auto" />
               </View>
               <View>
-                <View>
-                  <Pressable
-                    onPress={() => navigation.navigate("Login")}
-                    style={{ marginBottom: "1%" }}
-                  >
-                    <Text style={{ color: "#c3c3c3" }}>
-                      I have an account?
-                      <Text style={{ color: "#fff", fontWeight: "bold" }}>
-                        {"  "}
-                        Login
-                      </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                  }}
+                >
+                  <Text style={{ color: "#c3c3c3" }}>I have an account</Text>
+                  <Pressable onPress={() => navigation.navigate("Login")}>
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                      {"  "}
+                      Login
                     </Text>
                   </Pressable>
                 </View>
