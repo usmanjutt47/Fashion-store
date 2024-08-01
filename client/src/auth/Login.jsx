@@ -170,7 +170,7 @@ export default function Login() {
                   keyboardType="email-address"
                 />
 
-                <Text style={[styles.label, styles.marginTop]}>Password</Text>
+                <Text style={[styles.label, { marginTop: 10 }]}>Password</Text>
                 <View style={styles.passwordContainer}>
                   <TextInput
                     style={[styles.passwordInput]}
@@ -205,7 +205,7 @@ export default function Login() {
                       style={{
                         color: "#fff",
                         fontSize: 12,
-                        fontWeight: "semibold",
+                        fontWeight: "bold",
                       }}
                     >
                       Forgot Password?
@@ -214,22 +214,32 @@ export default function Login() {
                 </View>
               </View>
               <View>
-                <Pressable
-                  onPress={() => navigation.navigate("SignUp")}
+                <View
                   style={{
                     flexDirection: "row",
-                    marginBottom: "2%",
+                    marginBottom: 20,
                   }}
                 >
-                  <Text style={{ fontWeight: "medium", color: "#DCDCDB" }}>
-                    Don’t have an account?{" "}
+                  <Text
+                    style={{
+                      fontWeight: "medium",
+                      color: "#DCDCDB",
+                    }}
+                  >
+                    Don’t have an account?
                   </Text>
                   <Pressable onPress={() => navigation.navigate("SignUp")}>
-                    <Text style={{ fontWeight: "bold", color: "#fff" }}>
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        color: "#fff",
+                      }}
+                    >
+                      {" "}
                       Register
                     </Text>
                   </Pressable>
-                </Pressable>
+                </View>
                 <Pressable
                   style={{
                     backgroundColor: "#3AA2ED",
@@ -291,12 +301,10 @@ const styles = StyleSheet.create({
     color: "#1E1E1E",
     fontSize: 16,
     marginBottom: 5,
-  },
-  marginTop: {
-    marginTop: 10,
-  },
-  emailInput: {
     fontWeight: "bold",
+  },
+
+  emailInput: {
     paddingLeft: 20,
     paddingRight: 20,
     height: 48,
@@ -311,7 +319,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   passwordInput: {
-    fontWeight: "bold",
     paddingLeft: 20,
     paddingRight: 50,
     height: 48,
