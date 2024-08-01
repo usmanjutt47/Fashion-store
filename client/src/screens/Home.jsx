@@ -4,10 +4,9 @@ import {
   Text,
   Image,
   StyleSheet,
-  ScrollView,
+  FlatList,
   TouchableOpacity,
   Pressable,
-  FlatList,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
@@ -83,7 +82,30 @@ export default function Home() {
     setSelected(item);
   };
 
-  const renderItem = ({ item }) => (
+  const renderButtonItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => handlePress(item.label)}
+      style={[
+        styles.pressableButton,
+        {
+          backgroundColor: selected === item.label ? "#000000" : "#EBF2F4",
+          width: item.width,
+          marginHorizontal: 5,
+        },
+      ]}
+    >
+      <Text
+        style={[
+          styles.pressableText,
+          { color: selected === item.label ? "#FFFFFF" : "#000000" },
+        ]}
+      >
+        {item.label}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  const renderCardItem = ({ item }) => (
     <View style={styles.card}>
       <Pressable style={styles.itemContainer}>
         <Image source={item.image} style={styles.itemImage} />
@@ -122,9 +144,8 @@ export default function Home() {
     </View>
   );
 
-  return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
+  const renderListHeader = () => (
+    <View>
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image
@@ -140,62 +161,36 @@ export default function Home() {
           />
         </View>
       </View>
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
+      <FlatList
+        data={buttonData}
+        renderItem={renderButtonItem}
+        keyExtractor={(item) => item.key}
+        horizontal
         showsHorizontalScrollIndicator={false}
-      >
-        <Text style={styles.collectionTitle}>Collection</Text>
-        <FlatList
-          data={buttonData.map((item) => item.label)}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => handlePress(item)}
-              style={[
-                styles.pressableButton,
-                {
-                  backgroundColor: selected === item ? "#000000" : "#EBF2F4",
-                  width: item === "All" ? 66 : 94,
-                  marginHorizontal: 5,
-                },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.pressableText,
-                  { color: selected === item ? "#FFFFFF" : "#000000" },
-                ]}
-              >
-                {item}
-              </Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.buttonContainer}
-        />
-        <View style={styles.carouselContainer}>
-          <Carousel />
-        </View>
+        contentContainerStyle={styles.buttonContainer}
+      />
+      <View style={styles.carouselContainer}>
+        <Carousel />
+      </View>
+      <View style={styles.scrollInnerContainer}>
+        <Text style={styles.tShirtText}>Elegance T-shirt</Text>
+      </View>
+    </View>
+  );
 
-        <View style={styles.scrollInnerContainer}>
-          <Text style={styles.tShirtText}>Elegance T-shirt</Text>
-          <FlatList
-            data={cardData}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            numColumns={2}
-            columnWrapperStyle={styles.columnWrapper}
-            contentContainerStyle={styles.cardContainer}
-            showsVerticalScrollIndicator={false}
-          />
-          <Text style={styles.collectionTitle}>Collection</Text>
-          <View style={[styles.carouselContainer, { marginBottom: "5%" }]}>
-            <Carousel />
-          </View>
-        </View>
-      </ScrollView>
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+      <FlatList
+        data={cardData}
+        renderItem={renderCardItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={styles.columnWrapper}
+        contentContainerStyle={styles.cardContainer}
+        ListHeaderComponent={renderListHeader}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 }
