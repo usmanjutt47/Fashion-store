@@ -4,9 +4,10 @@ import {
   Text,
   Image,
   StyleSheet,
-  FlatList,
+  ScrollView,
   TouchableOpacity,
   Pressable,
+  FlatList,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
@@ -82,30 +83,7 @@ export default function Home() {
     setSelected(item);
   };
 
-  const renderButtonItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => handlePress(item.label)}
-      style={[
-        styles.pressableButton,
-        {
-          backgroundColor: selected === item.label ? "#000000" : "#EBF2F4",
-          width: item.width,
-          marginHorizontal: 5,
-        },
-      ]}
-    >
-      <Text
-        style={[
-          styles.pressableText,
-          { color: selected === item.label ? "#FFFFFF" : "#000000" },
-        ]}
-      >
-        {item.label}
-      </Text>
-    </TouchableOpacity>
-  );
-
-  const renderCardItem = ({ item }) => (
+  const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Pressable style={styles.itemContainer}>
         <Image source={item.image} style={styles.itemImage} />
@@ -144,8 +122,9 @@ export default function Home() {
     </View>
   );
 
-  const renderListHeader = () => (
-    <View>
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Image
@@ -161,36 +140,62 @@ export default function Home() {
           />
         </View>
       </View>
-      <FlatList
-        data={buttonData}
-        renderItem={renderButtonItem}
-        keyExtractor={(item) => item.key}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.buttonContainer}
-      />
-      <View style={styles.carouselContainer}>
-        <Carousel />
-      </View>
-      <View style={styles.scrollInnerContainer}>
-        <Text style={styles.tShirtText}>Elegance T-shirt</Text>
-      </View>
-    </View>
-  );
-
-  return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <FlatList
-        data={cardData}
-        renderItem={renderCardItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        contentContainerStyle={styles.cardContainer}
-        ListHeaderComponent={renderListHeader}
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
-      />
+        showsHorizontalScrollIndicator={false}
+      >
+        <Text style={styles.collectionTitle}>Collection</Text>
+        <FlatList
+          data={buttonData.map((item) => item.label)}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => handlePress(item)}
+              style={[
+                styles.pressableButton,
+                {
+                  backgroundColor: selected === item ? "#000000" : "#EBF2F4",
+                  width: item === "All" ? 66 : 94,
+                  marginHorizontal: 5,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.pressableText,
+                  { color: selected === item ? "#FFFFFF" : "#000000" },
+                ]}
+              >
+                {item}
+              </Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.buttonContainer}
+        />
+        <View style={styles.carouselContainer}>
+          <Carousel />
+        </View>
+
+        <View style={styles.scrollInnerContainer}>
+          <Text style={styles.tShirtText}>Elegance T-shirt</Text>
+          <FlatList
+            data={cardData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+            columnWrapperStyle={styles.columnWrapper}
+            contentContainerStyle={styles.cardContainer}
+            showsVerticalScrollIndicator={false}
+          />
+          <Text style={styles.collectionTitle}>Collection</Text>
+          <View style={[styles.carouselContainer, { marginBottom: "5%" }]}>
+            <Carousel />
+          </View>
+        </View>
+      </ScrollView>
     </View>
   );
 }
