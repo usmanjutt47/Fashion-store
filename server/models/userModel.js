@@ -1,13 +1,8 @@
 const mongoose = require("mongoose");
-const { v4: uuidv4 } = require("uuid");
 
 const userSchema = new mongoose.Schema(
   {
-    userId: {
-      type: String,
-      default: uuidv4,
-      unique: true,
-    },
+    userId: { type: mongoose.Schema.Types.ObjectId, auto: true },
     name: {
       type: String,
       required: true,
@@ -17,16 +12,17 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       trim: true,
-      match: [
-        /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-        "Please enter a valid email address ending with @gmail.com",
-      ],
+    },
+    phone: {
+      type: Number,
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
-      minlength: 6,
-      maxlength: 64,
+      min: 6,
+      max: 64,
     },
   },
   { timestamps: true }

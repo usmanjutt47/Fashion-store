@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Ecommerce-store",
-    "slug": "Ecommerce-store",
+    "name": "Fashion-store",
+    "slug": "Fashion-store",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,6 +22,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

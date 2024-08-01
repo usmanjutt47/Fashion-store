@@ -1,186 +1,246 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, Pressable } from "react-native";
-import Animated, {
-  FadeInDown,
-  FadeInLeft,
-  FadeInUp,
-} from "react-native-reanimated";
-import { Entypo, FontAwesome } from "@expo/vector-icons";
+import {
+  View,
+  ImageBackground,
+  Text,
+  StyleSheet,
+  Pressable,
+  TextInput,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import { BlurView } from "expo-blur";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import CountryCodeDropdownPicker from "react-native-dropdown-country-picker";
+import axios from "axios";
+import Toast from "react-native-toast-message";
 
 export default function SignUp() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [username, setUsername] = useState("");
+  const navigation = useNavigation();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [isNameFocused, setIsNameFocused] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isPhoneNumberFocused, setIsPhoneNumberFocused] = useState(false);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+  const [selected, setSelected] = useState("+92");
+  const [country, setCountry] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const handleLoginPress = () => {
-    if (!username.trim()) {
-      setButtonClicked(true);
-    } else {
-      console.log("Username:", username);
-      console.log("Email:", email);
-      console.log("Password:", password);
-      console.log("Confirm Password:", confirmPassword);
+  const handleRegister = async () => {
+    const fullPhoneNumber = `${selected}${phone}`;
+
+    if (!name || !email || !fullPhoneNumber || !password) {
+      Toast.show({
+        type: "error",
+        text1: "Validation Failed",
+        text2: "Please fill in all fields.",
+      });
+      return;
+    }
+
+    console.log({
+      name,
+      email,
+      phone: fullPhoneNumber,
+      password,
+    });
+
+    try {
+      const response = await axios.post(
+        "http://192.168.100.175:8080/api/v1/auth/register",
+        {
+          name,
+          email,
+          phone: fullPhoneNumber,
+          password,
+        }
+      );
+
+      if (response.data.success) {
+        Toast.show({
+          type: "success",
+          text1: "Registration Successful",
+          text2: "Please login with your credentials",
+          visibilityTime: 500,
+          onHide: () => {
+            navigation.navigate("Login");
+          },
+        });
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+        setPassword("");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Registration Failed",
+          text2: response.data.message || "An error occurred",
+        });
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      Toast.show({
+        type: "error",
+        text1: "Registration Failed",
+        text2:
+          error.response?.data?.message ||
+          "An error occurred while registering user",
+      });
     }
   };
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        entering={FadeInUp.delay(600).springify()}
-        style={styles.headingContainer}
-      >
-        <Text style={styles.heading}>SignUp</Text>
-      </Animated.View>
+      <StatusBar style="auto" />
+      <View style={styles.imageContainer}>
+        <ImageBackground
+          source={require("../../assets/splashAssets/splash.png")}
+          style={styles.image}
+          blurRadius={2.5}
+        >
+          <View style={styles.headerContainer}>
+            <BlurView style={styles.backButton}>
+              <Pressable
+                onPress={() => navigation.navigate("Login")}
+                style={{ justifyContent: "center" }}
+              >
+                <Ionicons
+                  name="chevron-back"
+                  size={24}
+                  color="#1E1E1E"
+                  style={{ alignSelf: "center" }}
+                />
+              </Pressable>
+            </BlurView>
+            <View style={styles.headingContainer}>
+              <Text style={styles.eleganciaHeading}>Elegancia</Text>
+            </View>
+          </View>
 
-      {/*name section starts below*/}
-      <Animated.View
-        entering={FadeInLeft.delay(100)}
-        style={styles.animatedContainer}
-      >
-        <View style={styles.inputContainer}>
-          <FontAwesome
-            name="user"
-            size={20}
-            color="black"
-            style={styles.icon}
-          />
-          <TextInput
-            placeholder="Name"
-            style={styles.input}
-            value={username}
-            onChangeText={setUsername}
-            cursorColor={"#000"}
-          />
-        </View>
-        {buttonClicked && !username.trim() && (
-          <Text style={styles.errorMessage}>Please enter your name</Text>
-        )}
-      </Animated.View>
-
-      {/* email section starts below */}
-      <Animated.View
-        entering={FadeInLeft.delay(100)}
-        style={styles.animatedContainer}
-      >
-        <View style={styles.inputContainer}>
-          <FontAwesome
-            name="envelope"
-            size={20}
-            color="black"
-            style={styles.icon}
-          />
-          <TextInput
-            placeholder="Email"
-            style={styles.input}
-            value={email}
-            onChangeText={setEmail}
-            cursorColor={"#000"}
-          />
-        </View>
-        {buttonClicked && !email.trim() && (
-          <Text style={styles.errorMessage}>Please enter your email</Text>
-        )}
-      </Animated.View>
-
-      {/* password section starts below */}
-      <Animated.View
-        entering={FadeInLeft.delay(100).springify()}
-        style={styles.animatedContainer}
-      >
-        <View style={styles.passwordContainer}>
-          <Entypo name="lock" size={20} color="#000" style={styles.icon} />
-          <TextInput
-            placeholder="Password"
-            style={styles.input}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!passwordVisible}
-            cursorColor={"#000"}
-          />
-          <Pressable onPress={togglePasswordVisibility}>
-            <FontAwesome
-              name={passwordVisible ? "eye" : "eye-slash"}
-              size={20}
-              color="#000"
-              style={{ marginRight: 10 }}
-            />
-          </Pressable>
-        </View>
-        {buttonClicked && !password.trim() && (
-          <Text style={[styles.errorMessage, { marginRight: "54%" }]}>
-            Please enter password
-          </Text>
-        )}
-      </Animated.View>
-      {/* confirmPassword section starts below */}
-      <Animated.View
-        entering={FadeInLeft.delay(100).springify()}
-        style={styles.animatedContainer}
-      >
-        <View style={styles.passwordContainer}>
-          <Entypo name="lock" size={20} color="#000" style={styles.icon} />
-          <TextInput
-            placeholder="Confirm Password"
-            style={styles.input}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry={!passwordVisible}
-            cursorColor={"#000"}
-          />
-          <Pressable onPress={togglePasswordVisibility}>
-            <FontAwesome
-              name={passwordVisible ? "eye" : "eye-slash"}
-              size={20}
-              color="#000"
-              style={{ marginRight: 10 }}
-            />
-          </Pressable>
-        </View>
-        {buttonClicked && !confirmPassword.trim() && (
-          <Text style={[styles.errorMessage, { marginRight: "54%" }]}>
-            Please Confrim Password
-          </Text>
-        )}
-      </Animated.View>
-      <Animated.View
-        entering={FadeInDown.delay(600).springify()}
-        style={{
-          width: "80%",
-          backgroundColor: "#000",
-          height: 50,
-          borderRadius: 30,
-          marginTop: 20,
-          justifyContent: "center",
-        }}
-      >
-        <Pressable onPress={handleLoginPress}>
-          <Text
-            style={{
-              color: "#fff",
-              fontSize: 20,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
+          <BlurView
+            style={styles.blurViewContainer}
+            intensity={100}
+            tint="default"
+            experimentalBlurMethod="dimezisBlurView"
           >
-            SignUp
-          </Text>
-        </Pressable>
-      </Animated.View>
-      <Animated.View entering={FadeInDown.delay(600).springify()}>
-        <Pressable>
-          <Text style={{ color: "#000", marginTop: "5%" }}>
-            Don't have an account?{"  "}
-            <Text style={{ color: "#000", fontWeight: "bold" }}>SignUp</Text>
-          </Text>
-        </Pressable>
-      </Animated.View>
+            <View
+              style={{
+                flexDirection: "column",
+                height: "100%",
+                width: "100%",
+                justifyContent: "space-between",
+                padding: "5%",
+              }}
+            >
+              <View>
+                <Text style={styles.createAccountHeading}>Create Account</Text>
+                <View style={styles.signUpFormSection}>
+                  <Text style={styles.label}>Name</Text>
+                  <TextInput
+                    style={[styles.input]}
+                    placeholder="Enter Your Name"
+                    placeholderTextColor="#4e4e4e"
+                    value={name}
+                    onChangeText={setName}
+                    onFocus={() => setIsNameFocused(true)}
+                    onBlur={() => setIsNameFocused(false)}
+                  />
+
+                  <Text style={[styles.label, styles.marginTop]}>Email</Text>
+                  <TextInput
+                    style={[styles.input]}
+                    placeholder="Enter Your Email"
+                    placeholderTextColor="#4e4e4e"
+                    value={email}
+                    onChangeText={setEmail}
+                    onFocus={() => setIsEmailFocused(true)}
+                    onBlur={() => setIsEmailFocused(false)}
+                    keyboardType="email-address"
+                  />
+
+                  <Text style={styles.label}>Phone number</Text>
+                  <TouchableWithoutFeedback
+                    onPressIn={() => setIsPhoneNumberFocused(true)}
+                    onPressOut={() => setIsPhoneNumberFocused(false)}
+                  >
+                    <View style={[styles.countryContainer]}>
+                      <CountryCodeDropdownPicker
+                        selected={selected}
+                        setSelected={setSelected}
+                        setCountryDetails={setCountry}
+                        phone={phone}
+                        setPhone={setPhone}
+                        countryCodeTextStyles={styles.countryCodeTextStyle}
+                        dropdownStyles={styles.dropDownStyle}
+                        searchStyles={styles.searchStyle}
+                        countryCodeContainerStyles={styles.countryCodeContainer}
+                        phoneStyles={styles.phoneStyle}
+                      />
+                    </View>
+                  </TouchableWithoutFeedback>
+
+                  <Text style={[styles.label, styles.marginTop]}>Password</Text>
+                  <TextInput
+                    style={[styles.input]}
+                    placeholder="Enter Password"
+                    placeholderTextColor="#4e4e4e"
+                    value={password}
+                    onChangeText={setPassword}
+                    onFocus={() => setIsPasswordFocused(true)}
+                    onBlur={() => setIsPasswordFocused(false)}
+                    secureTextEntry
+                  />
+                </View>
+                <StatusBar style="auto" />
+              </View>
+              <View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginBottom: 20,
+                  }}
+                >
+                  <Text style={{ color: "#c3c3c3" }}>I have an account</Text>
+                  <Pressable onPress={() => navigation.navigate("Login")}>
+                    <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                      {"  "}
+                      Login
+                    </Text>
+                  </Pressable>
+                </View>
+
+                <Pressable
+                  onPress={handleRegister}
+                  style={{
+                    backgroundColor: "#3AA2ED",
+                    height: 48,
+                    justifyContent: "center",
+                    borderRadius: 36,
+                  }}
+                >
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 16,
+                      color: "#fff",
+                      fontWeight: "medium",
+                      letterSpacing: 0.5,
+                    }}
+                  >
+                    Sign up
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          </BlurView>
+        </ImageBackground>
+      </View>
+      <Toast />
     </View>
   );
 }
@@ -188,54 +248,113 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#cecece",
-    justifyContent: "center",
-    alignItems: "center",
   },
-  headingContainer: {},
-  heading: {
-    fontSize: 35,
-    fontWeight: "bold",
-    color: "#000",
-    textAlign: "center",
+  imageContainer: {
+    flex: 1,
+    width: "100%",
+    height: "80%",
   },
-  inputContainer: {
+  image: {
+    flex: 1,
+  },
+  headerContainer: {
+    height: 100,
     flexDirection: "row",
     alignItems: "center",
-    width: "90%",
-    height: 50,
-    borderColor: "#000",
-    borderWidth: 1,
-    borderRadius: 30,
-    backgroundColor: "#fff",
-    paddingLeft: 10,
+    marginTop: 20,
   },
-  icon: {
-    marginRight: 10,
+  backButton: {
+    width: 44,
+    height: 44,
+    justifyContent: "center",
+    borderRadius: 36,
+    marginLeft: "5%",
+    overflow: "hidden",
+  },
+  headingContainer: {
+    flex: 1,
+    position: "absolute",
+    width: "100%",
+  },
+  eleganciaHeading: {
+    fontWeight: "bold",
+    fontSize: 30,
+    color: "#1E1E1E",
+    alignSelf: "center",
+  },
+  blurViewContainer: {
+    width: "100%",
+    height: "76%",
+    position: "absolute",
+    bottom: 0,
+    borderTopRightRadius: 50,
+    borderTopLeftRadius: 50,
+    overflow: "hidden",
+  },
+  createAccountHeading: {
+    fontSize: 30,
+    color: "#1E1E1E",
+    alignSelf: "center",
+    marginTop: 20,
+  },
+  signUpFormSection: {
+    justifyContent: "center",
+    marginTop: "10%",
+  },
+  label: {
+    color: "#1E1E1E",
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  marginTop: {
+    marginTop: 10,
   },
   input: {
-    flex: 1,
-    color: "#000",
-  },
-  animatedContainer: {
-    width: "90%",
-    alignItems: "center",
-    marginTop: 10,
-    justifyContent: "center",
-  },
-  passwordContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "90%",
-    height: 50,
-    borderColor: "#000",
+    fontWeight: "bold",
+    paddingLeft: 20,
+    paddingRight: 20,
+    height: 48,
+    borderColor: "#6F7072",
     borderWidth: 1,
     borderRadius: 30,
-    backgroundColor: "#fff",
-    paddingLeft: 10,
+    backgroundColor: "transparent",
+    color: "#1E1E1E",
   },
-  errorMessage: {
-    color: "#f00",
-    marginRight: "45%",
+  countryContainer: {
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: "#6F7072",
+    overflow: "hidden",
+    marginTop: 10,
+  },
+  countryCodeTextStyle: {
+    fontSize: 14,
+    fontWeight: "bold",
+    letterSpacing: 0.5,
+  },
+  dropDownStyle: {
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    backgroundColor: "transparent",
+    overflow: "hidden",
+    marginRight: 3,
+  },
+  searchStyle: {
+    backgroundColor: "transparent",
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+  },
+  countryCodeContainer: {
+    borderRadius: 30,
+    height: 44,
+    margin: 5,
+    backgroundColor: "transparent",
+    borderColor: "#7d7c7b",
+    borderWidth: 1,
+  },
+  phoneStyle: {
+    backgroundColor: "transparent",
+    borderRadius: 5,
+    borderWidth: null,
   },
 });
