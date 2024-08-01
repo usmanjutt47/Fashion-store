@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
 const { comparePassword } = require("../helpers/authHelper");
 var jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 
 // register Controller
 const registerController = async (req, res) => {
@@ -134,4 +135,52 @@ const loginController = async (req, res) => {
   }
 };
 
-module.exports = { registerController, loginController };
+function validateEmail(email) {
+  const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return re.test(email);
+}
+const sendWelcomeEmail = async (req, res) => {
+  try {
+    const userEmail = req.body.email;
+
+    // Validate email
+    if (!validateEmail(userEmail)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email address." });
+    }
+
+    // Create transport for Gmail
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+
+    // Send welcome email
+    const info = await transporter.sendMail({
+      from: `"Fashion Store" <${process.env.EMAIL_USER}>`,
+      to: userEmail,
+      subject: "Welcome to Fashion Store",
+      text: `Hello and welcome to our app! We're glad to have you with us.`,
+      html: `<p>Hello and welcome to our app! We're glad to have you with us.</p>`,
+    });
+
+    console.log("Welcome email sent: %s", info.messageId);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Welcome email sent to your email." });
+  } catch (error) {
+    console.error("Error in sending welcome email:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error in sending welcome email.",
+      error,
+    });
+  }
+};
+
+module.exports = { registerController, loginController, sendWelcomeEmail };

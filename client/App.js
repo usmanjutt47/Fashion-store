@@ -12,19 +12,18 @@ import Home from "./src/screens/Home";
 import Cart from "./src/TabsScreens/Cart";
 import Profile from "./src/TabsScreens/Profile";
 import ProductDetail from "./src/screens/ProductDetail";
+import ForgotPassword from "./src/screens/ForgotPassword";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MainStack() {
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="HomeStack"
-    >
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Auth" component={AuthOrMainScreen} />
       <Stack.Screen name="HomeStack" component={HomeStack} />
       <Stack.Screen name="ProductDetails" component={ProductDetail} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
     </Stack.Navigator>
   );
 }
