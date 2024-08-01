@@ -3,6 +3,7 @@ const userModel = require("../models/userModel");
 const { comparePassword } = require("../helpers/authHelper");
 var jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const { authenticator } = require("otplib");
 
 // register Controller
 const registerController = async (req, res) => {
@@ -150,7 +151,22 @@ const sendWelcomeEmail = async (req, res) => {
         .json({ success: false, message: "Invalid email address." });
     }
 
-    // Create transport for Gmail
+    // Check if the email exists in the database
+    const user = await userModel.findOne({ email: userEmail });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Email address not found in database. Please provide a valid email address.",
+      });
+    }
+
+    // Generate a 4-digit OTP
+    authenticator.options = { digits: 4 }; // Set OTP length to 4 digits
+    const otp = authenticator.generate(userEmail); // Use email as secret or a secure way to generate OTP
+    user.otp = otp; // Save OTP in the user model or cache
+    await user.save();
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -159,13 +175,75 @@ const sendWelcomeEmail = async (req, res) => {
       },
     });
 
+    // Customized welcome email
+    const htmlContent = `
+      <html>
+        <head>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              background-color: #f4f4f4;
+              color: #333;
+              margin: 0;
+              padding: 20px;
+            }
+            .container {
+              background-color: #fff;
+              border-radius: 8px;
+              padding: 20px;
+              max-width: 600px;
+              margin: auto;
+              box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+            h1 {
+              color: #333;
+            }
+            p {
+              font-size: 16px;
+              line-height: 1.5;
+            }
+            .footer {
+              font-size: 14px;
+              color: #777;
+              margin-top: 20px;
+            }
+            .button {
+              display: inline-block;
+              padding: 10px 20px;
+              font-size: 16px;
+              color: #fff;
+              background-color: #007bff;
+              text-decoration: none;
+              border-radius: 4px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>Welcome to Fashion Store, ${user.name}!</h1>
+            <p>Hello ${user.name},</p>
+            <p>Thank you for joining Fashion Store! We’re excited to have you on board. Start exploring our range of fashion products and enjoy exclusive offers.</p>
+            <p>Here is your One-Time Password (OTP) to verify your email address:</p>
+            <h2 style="font-size: 24px; color: #007bff;">${otp}</h2>
+            <p>If you did not request this, please ignore this email.</p>
+            <p>If you have any questions or need assistance, feel free to reach out to our support team.</p>
+            <div class="footer">
+              <p>Best regards,</p>
+              <p>The Fashion Store Team</p>
+              <p>Contact us at: <a href="mailto:usmanjutt04747@gmail.com">usmanjutt04747@gmail.com</a> or <a href="mailto:fahadayyaz31@gmail.com">fahadayyaz31@gmail.com</a></p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
     // Send welcome email
     const info = await transporter.sendMail({
       from: `"Fashion Store" <${process.env.EMAIL_USER}>`,
       to: userEmail,
       subject: "Welcome to Fashion Store",
-      text: `Hello and welcome to our app! We're glad to have you with us.`,
-      html: `<p>Hello and welcome to our app! We're glad to have you with us.</p>`,
+      text: `Hello and welcome to our app! We're glad to have you with us. Your OTP is ${otp}.`,
+      html: htmlContent,
     });
 
     console.log("Welcome email sent: %s", info.messageId);
