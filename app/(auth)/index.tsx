@@ -1,18 +1,26 @@
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import { BlurView } from "expo-blur";
+import CustomButton from "@/components/CustomButton";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import TextEditor from "@/components/TextEditor";
+import Wrapper from "@/components/Wrapper";
 
 export default function Login() {
   return (
-    <View style={styles.container}>
+    <Wrapper>
       <StatusBar style="auto" />
       <ImageBackground
         source={require("@/assets/splashAssets/splash.png")}
         style={styles.imageContainer}
-        blurRadius={2.5}
+        blurRadius={5}
       >
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>Elegancia</Text>
@@ -24,23 +32,32 @@ export default function Login() {
           experimentalBlurMethod="dimezisBlurView"
         >
           <View style={styles.blurContent}>
-            <Text style={styles.welcomeText}>Welcome back</Text>
-            <Text style={styles.infoText}>We’ve sent a code to</Text>
-            <View style={{ marginTop: "10%" }}>
-              <Text>Email or phone number</Text>
-              <TextEditor />
+            <View>
+              <Text style={styles.welcomeText}>Welcome back</Text>
+              <Text style={styles.infoText}>We’ve sent a code to</Text>
+              <View style={styles.inputContainer}>
+                <Text>Email or phone number</Text>
+                <TextEditor placeholder="Enter your email" />
+              </View>
+              <View style={styles.inputContainer}>
+                <Text>Password</Text>
+                <TextEditor placeholder="Password" secureTextEntry />
+              </View>
+              <TouchableOpacity style={styles.forgotPasswordContainer}>
+                <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.loginButtonContainer}>
+              <CustomButton text="Login" />
             </View>
           </View>
         </BlurView>
       </ImageBackground>
-    </View>
+    </Wrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageContainer: {
     flex: 1,
     width: "100%",
@@ -67,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "95%",
     alignSelf: "center",
+    justifyContent: "space-between",
   },
   welcomeText: {
     fontSize: 24,
@@ -83,5 +101,21 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: "2%",
     color: "#1C1A18",
+  },
+  inputContainer: {
+    marginTop: "5%",
+  },
+  forgotPasswordContainer: {
+    alignSelf: "flex-start",
+  },
+  forgotPasswordText: {
+    color: "#3AA2ED",
+    fontWeight: "600",
+    flexWrap: "wrap",
+  },
+  loginButtonContainer: {
+    marginBottom: "10%",
+    width: "95%",
+    alignSelf: "center",
   },
 });
