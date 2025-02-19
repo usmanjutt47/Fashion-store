@@ -1,17 +1,28 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  SafeAreaView,
+  StyleSheet,
+} from "react-native";
+import React, { ReactNode } from "react";
 
-import React from "react";
-
-export default function Wrapper({ children }: { children: React.ReactNode }) {
+export default function Wrapper({ children }: { children: ReactNode }) {
   return (
-    <KeyboardAvoidingView behavior="padding" style={styles.container}>
-      <View>{children}</View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <SafeAreaView style={styles.innerContainer}>{children}</SafeAreaView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  innerContainer: {
     flex: 1,
   },
 });
